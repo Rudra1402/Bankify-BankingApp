@@ -9,3 +9,5 @@
 6. Add contacts.
 7. Transfer funds to your contacts.
 8. Print/View account statements.
+
+### [Link](https://bankify-app.netlify.app/)
