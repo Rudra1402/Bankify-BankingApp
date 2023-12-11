@@ -10,4 +10,9 @@
 7. Transfer funds to your contacts.
 8. Print/View account statements.
 
+Things to correct/improve:
+1. Transactions with 0 amount cannot be processed (Toast notification).
+2. Email update should resend verification email.
+3. Forgot password.
+
 ### Live [Link](https://bankify-app.netlify.app/)
