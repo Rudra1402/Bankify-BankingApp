@@ -76,7 +76,7 @@ function Dashboard() {
                     <CustomCard
                         className='bg-gray-100 !shadow !shadow-slate-100 w-[48%] md:w-[31%] lg:w-[22.5%] h-40 p-4 rounded-md flex flex-col gap-3 hover:scale-105 transition-all'
                     >
-                        <div className='text-lg leading-none'>Your contacts</div>
+                        <div className='text-lg leading-none'>Your contacts ({data?.contacts?.length})</div>
                         <div className='flex gap-2 items-center relative h-12 overflow-auto'>
                             {data?.contacts?.length > 0
                                 ? data?.contacts?.map((contact, index) => {

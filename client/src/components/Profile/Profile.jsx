@@ -166,7 +166,7 @@ function Profile() {
                             text='Save'
                             size='none'
                             className='!py-1 !px-6 !w-fit !text-base'
-                            onClick={() => updateUserApi(user?.id, updateUser, setReRender)}
+                            onClick={() => updateUserApi(user?.id, updateUser, setUser, setReRender)}
                         />
                         <hr className='my-1' />
                         <div className='text-xl leading-none mt-2 text-gray-700 underline underline-offset-4'>Change Password</div>
@@ -221,6 +221,7 @@ function Profile() {
                             type='submit'
                             text='Upload'
                             size='small'
+                            className='!text-base !h-8'
                             onClick={handleImageUpload}
                         />
                     </div>

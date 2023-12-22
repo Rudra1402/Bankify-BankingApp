@@ -11,7 +11,7 @@ export const userById = async (id, setUser, setLoading) => {
         })
 }
 
-export const updateUserApi = async (id, updateUser, setReRender) => {
+export const updateUserApi = async (id, updateUser, setUser, setReRender) => {
     await api.put('/update/user', {
         id: id,
         firstName: updateUser?.firstName,
@@ -20,6 +20,11 @@ export const updateUserApi = async (id, updateUser, setReRender) => {
         username: updateUser?.username
     }).then(response => {
         Toast.success(response.data?.message);
+        if (response.data?.isEmailUpdated) {
+            setUser(null);
+            localStorage.removeItem("user");
+            Toast.warn('Verify your new email!');
+        }
         setReRender(new Date().getTime());
     }).catch(err => {
         Toast.error(err?.response?.data?.message);
@@ -40,10 +45,14 @@ export const userLogin = async (payload, setUser) => {
     await api.post('/login', payload)
         .then(response => {
             if (response.data?.user?.token) {
-                localStorage.setItem("user", JSON.stringify(
-                    { ...response.data?.user, isProfileImageUpdated: false }
-                ))
-                setUser({ ...response.data?.user, isProfileImageUpdated: false })
+                if (!response.data?.user?.isVerified) {
+                    Toast.warn('Please verify your email!');
+                } else {
+                    localStorage.setItem("user", JSON.stringify(
+                        { ...response.data?.user, isProfileImageUpdated: false }
+                    ))
+                    setUser({ ...response.data?.user, isProfileImageUpdated: false })
+                }
             }
         }).catch(err => {
             Toast.error(err?.response?.data?.message)
@@ -65,6 +74,35 @@ export const changePassword = async (id, currentPassword, newPassword) => {
         }).catch(err => {
             Toast.error(err?.response?.data?.message)
         })
+}
+
+export const resetPassword = (email) => {
+    api.get('/forgot-password', { params: { email } })
+        .then(response => {
+            Toast.success(response.data?.message);
+        }).catch(err => {
+            Toast.error(err?.response?.data?.message);
+        })
+}
+
+export const verifyPassResetToken = (token, pass, confirmPass, setIsPassReset) => {
+    if (token == null) {
+        Toast.error('Token is null. Try again or refresh the page!')
+        return;
+    }
+    if (pass != confirmPass) {
+        Toast.error('Both the passwords do not match!')
+        return;
+    }
+    api.post('/reset-password', {
+        token,
+        newPassword: pass
+    }).then(response => {
+        Toast.success(response?.data?.message);
+        setIsPassReset(true);
+    }).catch(err => {
+        Toast.error(err?.response?.data?.message);
+    })
 }
 
 export const dashboardData = async (id, setData, setLoading) => {
@@ -91,9 +129,11 @@ export const verifyToken = (token, setMessage, setIsTokenVerified) => {
         .then(response => {
             setIsTokenVerified(true)
             setMessage(response.data?.message)
+            Toast.success(response.data?.message)
         }).catch(err => {
             setIsTokenVerified(true)
             setMessage(err?.response?.data?.message)
+            Toast.error(err?.response?.data?.message)
         })
 }
 
@@ -196,6 +236,14 @@ export const findContactsByEmail = (email, setContacts) => {
 }
 
 export const paymentTransfer = (fromAccId, toAccId, amount, setCreatePayment, setReRender) => {
+    if (amount == 0) {
+        Toast.error('Amount cannot be 0!')
+        return;
+    }
+    if (!amount) {
+        Toast.error('Enter a valid amount!');
+        return;
+    }
     api.post('/transfer', {
         fromAccount: fromAccId,
         toAccount: toAccId,

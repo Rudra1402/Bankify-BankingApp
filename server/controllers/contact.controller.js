@@ -15,6 +15,10 @@ router.post('/contacts', async (req, res) => {
             return res.status(404).json({ message: 'Email not found' });
         }
 
+        if (!user.isVerified) {
+            return res.status(403).json({ message: "User is not verified!" });
+        }
+
         const contact = new Contact({
             name,
             email,

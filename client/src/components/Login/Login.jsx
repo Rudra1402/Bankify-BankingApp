@@ -60,16 +60,22 @@ function Login({ setPage }) {
                     value={formik.values.email}
                     onChange={e => formik.setFieldValue("email", e.target.value)}
                 />
-                <CustomInput
-                    name={"password"}
-                    type='password'
-                    required={true}
-                    size='large'
-                    placeholder="Password"
-                    extraClass='!border-gray-300'
-                    value={formik.values.password}
-                    onChange={e => formik.setFieldValue("password", e.target.value)}
-                />
+                <div className='flex flex-col gap-1'>
+                    <CustomInput
+                        name={"password"}
+                        type='password'
+                        required={true}
+                        size='large'
+                        placeholder="Password"
+                        extraClass='!border-gray-300'
+                        value={formik.values.password}
+                        onChange={e => formik.setFieldValue("password", e.target.value)}
+                    />
+                    <Link
+                        className='text-blue-500 w-full flex justify-end text-sm'
+                        to={'/forgot-password'}
+                    >Forgot password?</Link>
+                </div>
                 <CustomButton
                     text="Login"
                     size='small'

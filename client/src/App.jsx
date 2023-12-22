@@ -16,6 +16,8 @@ import Profile from './components/Profile/Profile';
 import Accounts from './components/Accounts/Accounts';
 import Transfers from './components/Transfers/Transfers';
 import Contacts from './components/Contacts/Contacts';
+import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import ResetPassword from './components/ForgotPassword/ResetPassword';
 
 function App() {
   return (
@@ -28,7 +30,9 @@ function App() {
           <Route path="/dashboard/accounts" element={<Accounts />} />
           <Route path="/dashboard/transfers" element={<Transfers />} />
           <Route path="/dashboard/contacts" element={<Contacts />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/verify/:token" element={<Verify />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
         </Routes>
       </Router>
       <ToastContainer />

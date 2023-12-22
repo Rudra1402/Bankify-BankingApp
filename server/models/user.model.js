@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
     accounts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Account' }],
     isVerified: { type: Boolean, default: false },
     verificationToken: { type: String },
-    isAdmin: { type: Boolean, default: false }
+    isAdmin: { type: Boolean, default: false },
+    passResetToken: { type: String }
 });
 
 const User = mongoose.model('User', userSchema);
