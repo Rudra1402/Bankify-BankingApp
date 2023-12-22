@@ -12,7 +12,7 @@
 
 Things to correct/improve:
 1. Transactions with 0 amount cannot be processed (Toast notification). (✔)
-2. Email update should resend verification email.
+2. Email update should resend verification email. (✔)
 3. Forgot password. (✔)
 
 New Features yet to be added:
