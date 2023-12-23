@@ -26,7 +26,7 @@ const app = express()
 const PORT = process.env.PORT || 8000
 const url = process.env.ATLAS_URI
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
+// app.use(express.static(path.join(__dirname, '../client/dist')));
 
 const userRoutes = require('./controllers/user.controller')
 const accountRoutes = require('./controllers/account.controller')
@@ -51,9 +51,9 @@ mongoose.connect(url, {
     console.log('MongoDB error: ' + err)
 })
 
-app.get('*', (_, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
-});
+// app.get('*', (_, res) => {
+//     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+// });
 
 app.get('/', (_, res) => {
     res.json({ name: 'Server' })
