@@ -19,4 +19,4 @@ Things to correct/improve:
 New Features yet to be added:
 1. Request money
 
-### Live [Link](https://bankify-app.netlify.app/)
+### Live [Link](https://bankify-live.netlify.app/)
