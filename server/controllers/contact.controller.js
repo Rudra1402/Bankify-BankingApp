@@ -4,6 +4,7 @@ const User = require('../models/user.model');
 const Account = require('../models/account.model');
 const Contact = require('../models/contact.model');
 const Transaction = require('../models/transaction.model');
+const Notification = require('../models/notifications.model');
 
 router.post('/contacts', async (req, res) => {
     try {
@@ -25,6 +26,13 @@ router.post('/contacts', async (req, res) => {
             owner
         });
 
+        const notify = new Notification({
+            from: owner,
+            to: user._id,
+            notificationType: 1
+        })
+
+        await notify.save();
         const savedContact = await contact.save();
 
         // await User.findByIdAndUpdate(

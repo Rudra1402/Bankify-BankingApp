@@ -38,6 +38,7 @@ function Transfers() {
     const [historyLoading, setHistoryLoading] = useState(true);
 
     const [createPayment, setCreatePayment] = useState(false);
+    const [requestMoney, setRequestMoney] = useState(false);
     const [historyAccId, setHistoryAccId] = useState(null);
 
     useEffect(() => {
@@ -219,17 +220,96 @@ function Transfers() {
                                 </button>
                             </div>
                         </div>
+                        : null
+                    }
+                    {requestMoney
+                        ? <div className='rounded-md w-1/2 h-full bg-white p-5 flex flex-col gap-4 overflow-y-auto'>
+                            <div className='flex flex-col gap-1'>
+                                <label htmlFor="fromAccount" className='text-gray-400'>From Account</label>
+                                <select
+                                    name="fromAccount"
+                                    id="fromAccount"
+                                    className='bg-gray-100 p-2 rounded h-12 w-full text-gray-600'
+                                    onChange={e => {
+                                        setFromAccId(e.target.value)
+                                    }}
+                                >
+                                    {accountOptions?.map((acc, index) => (
+                                        <option value={accIds[index]} key={index}>{acc}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className='flex flex-col gap-1'>
+                                <label htmlFor="contact" className='text-gray-400'>Select Contact</label>
+                                <select
+                                    name="contact"
+                                    id="contact"
+                                    className='bg-gray-100 p-2 rounded h-12 w-full text-gray-600'
+                                    onChange={e => {
+                                        setSelectedContact(e.target.value)
+                                    }}
+                                >
+                                    {contactOptions?.map((c, index) => (
+                                        <option
+                                            value={contIds[index]}
+                                            key={index}
+                                        >{c}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <CustomInput
+                                label='Enter Amount'
+                                name='amount'
+                                extraClass='!w-full'
+                                type='number'
+                                placeholder="0"
+                                value={transferAmt}
+                                disabled={fromAccounts && fromContacts ? false : true}
+                                onChange={e => setTransferAmt(e.target.value)}
+                            />
+                            <div className='flex flex-row-reverse gap-2'>
+                                <button
+                                    className='bg-gray-100 border border-gray-300 text-gray-600 text-sm h-10 py-2 w-full rounded hover:bg-gray-50 cursor-pointer'
+                                    onClick={() => {
+                                        transferAmt != null || transferAmt != ""
+                                            ? console.log('Request:', fromAccId, selectedContact, transferAmt)
+                                            : null
+                                    }}
+                                    disabled={transferAmt == null || transferAmt == "" ? true : false}
+                                >
+                                    Send request
+                                </button>
+                                <button
+                                    className='bg-gray-100 border border-gray-300 text-gray-600 text-sm h-10 py-2 w-full rounded hover:bg-gray-50 cursor-pointer'
+                                    onClick={() => setRequestMoney(false)}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                        : null
+                    }
+                    {requestMoney || createPayment
+                        ? null
                         : <div className='rounded-md w-1/2 h-full bg-white p-5 flex flex-col justify-center items-center gap-4 overflow-y-auto'>
                             <div className='text-center underline underline-offset-4 text-2xl leading-none mb-4'>Transactions</div>
                             <div className='w-full text-lg leading-6 bg-slate-100 p-2 rounded'>&#8226; Send money to your friends, family or business related purposes.</div>
                             <div className='w-full text-lg leading-6 bg-slate-100 p-2 rounded'>&#8226; You can also monitor your transaction history.</div>
                             <div className='w-full text-lg leading-6 bg-slate-100 p-2 rounded'>&#8226; Add accounts and track your history.</div>
-                            <CustomButton
-                                text="Create Payment"
-                                className='mt-4 !text-sm !w-36 py-2'
-                                size='none'
-                                onClick={() => setCreatePayment(true)}
-                            />
+                            <div className='flex items-center gap-x-3'>
+                                <CustomButton
+                                    text="Send money"
+                                    className='mt-4 !text-sm !w-36 py-2'
+                                    size='none'
+                                    onClick={() => setCreatePayment(true)}
+                                />
+                                <CustomButton
+                                    text="Request money"
+                                    className='mt-4 !text-sm !w-36 py-2'
+                                    size='none'
+                                    onClick={() => setRequestMoney(true)}
+                                />
+                            </div>
                         </div>
                     }
                     <div className='w-1/2 h-full bg-white p-5 flex flex-col gap-3 overflow-y-auto border-l border-l-gray-200'>

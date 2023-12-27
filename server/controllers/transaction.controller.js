@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Transaction = require('../models/transaction.model');
 const Account = require('../models/account.model');
+const Notification = require('../models/notifications.model');
 const User = require('../models/user.model');
 
 router.post('/transfer', async (req, res) => {
@@ -12,11 +13,11 @@ router.post('/transfer', async (req, res) => {
         const destinationAccount = await Account.findById(toAccount);
 
         if (!sourceAccount || !destinationAccount) {
-            return res.status(404).json({ success: false, message: 'One or both accounts not found' });
+            return res.status(404).json({ success: false, message: 'One or both accounts not found!' });
         }
 
         if (sourceAccount.balance < amount) {
-            return res.status(400).json({ success: false, message: 'Insufficient balance' });
+            return res.status(400).json({ success: false, message: 'Insufficient balance!' });
         }
 
         const transaction = new Transaction({
@@ -27,6 +28,14 @@ router.post('/transfer', async (req, res) => {
 
         sourceAccount.balance -= amount;
         destinationAccount.balance += amount;
+
+        const notify = new Notification({
+            from: sourceAccount.user,
+            to: destinationAccount.user,
+            notificationType: 2
+        });
+
+        await notify.save();
 
         await transaction.save();
         await sourceAccount.save();

@@ -236,8 +236,8 @@ export const findContactsByEmail = (email, setContacts) => {
 }
 
 export const paymentTransfer = (fromAccId, toAccId, amount, setCreatePayment, setReRender) => {
-    if (amount == 0) {
-        Toast.error('Amount cannot be 0!')
+    if (amount <= 0) {
+        Toast.error('Amount cannot be 0 or less!')
         return;
     }
     if (!amount) {
