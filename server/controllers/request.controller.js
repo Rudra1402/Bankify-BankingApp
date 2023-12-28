@@ -16,21 +16,23 @@ router.post('/request', async (req, res) => {
             return res.status(403).json({ message: "Account not found!" });
         }
 
-        const requestContact = await Contact.findById(contact);
+        const requestContact = await Contact.findOne({ email: contact });
 
         if (!requestContact) {
             return res.status(403).json({ message: "Contact not found!" });
         }
 
+        const contactUser = await User.findOne({ email: contact });
+
         const notify = new Notification({
-            from: yourAccount._id,
-            to: requestContact._id,
+            from: yourAccount.user,
+            to: contactUser._id,
             notificationType: 3
         })
 
         const newRequest = new Request({
-            account: account,
-            contact: contact,
+            account: yourAccount._id,
+            contact: requestContact._id,
             amount: amount
         })
 
@@ -63,3 +65,5 @@ router.get('/requests/:userid', async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch requests!' });
     }
 })
+
+module.exports = router;

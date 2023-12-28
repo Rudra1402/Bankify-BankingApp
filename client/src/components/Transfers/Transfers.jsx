@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { findAccountsByEmail, findAccountsById, findContactsById, historyByAccountId, paymentTransfer } from '../../apis/apis';
+import { createRequest, findAccountsByEmail, findAccountsById, findContactsById, historyByAccountId, paymentTransfer } from '../../apis/apis';
 import AppContext from '../../context/AppContext'
 import CustomInput from '../../custom/CustomInput'
 import DashboardLayout from '../../Layouts/DashboardLayout'
@@ -272,7 +272,11 @@ function Transfers() {
                                     className='bg-gray-100 border border-gray-300 text-gray-600 text-sm h-10 py-2 w-full rounded hover:bg-gray-50 cursor-pointer'
                                     onClick={() => {
                                         transferAmt != null || transferAmt != ""
-                                            ? console.log('Request:', fromAccId, selectedContact, transferAmt)
+                                            ? createRequest({
+                                                account: fromAccId,
+                                                contact: selectedContact,
+                                                amount: parseInt(transferAmt)
+                                            }, setRequestMoney, setReRender)
                                             : null
                                     }}
                                     disabled={transferAmt == null || transferAmt == "" ? true : false}

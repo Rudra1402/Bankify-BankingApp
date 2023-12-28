@@ -4,7 +4,6 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const fileUpload = require('express-fileupload')
-const path = require('path')
 
 const admin = require('firebase-admin')
 // const serviceAccountFirebase = require('./banking-app-b30cb-firebase-adminsdk-mm73m-1967c5c1f4.json')
@@ -26,12 +25,12 @@ const app = express()
 const PORT = process.env.PORT || 8000
 const url = process.env.ATLAS_URI
 
-// app.use(express.static(path.join(__dirname, '../client/dist')));
-
 const userRoutes = require('./controllers/user.controller')
 const accountRoutes = require('./controllers/account.controller')
 const contactRoutes = require('./controllers/contact.controller')
+const requestRoutes = require('./controllers/request.controller')
 const transactionRoutes = require('./controllers/transaction.controller')
+const notificationRoutes = require('./controllers/notifications.controller')
 
 app.use(cors())
 app.use(express.json())
@@ -51,10 +50,6 @@ mongoose.connect(url, {
     console.log('MongoDB error: ' + err)
 })
 
-// app.get('*', (_, res) => {
-//     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
-// });
-
 app.get('/', (_, res) => {
     res.json({ name: 'Server' })
 })
@@ -62,6 +57,8 @@ app.get('/', (_, res) => {
 app.use('/api', userRoutes)
 app.use('/api', accountRoutes)
 app.use('/api', contactRoutes)
+app.use('/api', requestRoutes)
 app.use('/api', transactionRoutes)
+app.use('/api', notificationRoutes)
 
 app.listen(PORT, console.log('Server running on PORT: ' + PORT))

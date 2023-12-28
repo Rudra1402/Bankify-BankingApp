@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const requestSchema = new mongoose.model({
+const requestSchema = new mongoose.Schema({
     account: { type: mongoose.Schema.Types.ObjectId, ref: 'Account' },
     contact: { type: mongoose.Schema.Types.ObjectId, ref: 'Contact' },
     amount: { type: Number, required: true },

@@ -297,3 +297,14 @@ export const historyByUserId = async (id, setHistory, setLoading) => {
             setLoading(false)
         })
 }
+
+export const createRequest = async (payload, setRequestMoney, setReRender) => {
+    await api.post('/request', payload)
+        .then(response => {
+            Toast.success(response.data?.message);
+            setRequestMoney(false);
+            setReRender(new Date().getTime());
+        }).catch(err => {
+            Toast.error(err?.response?.data?.message);
+        })
+}
