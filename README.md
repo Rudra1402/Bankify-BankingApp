@@ -17,6 +17,7 @@ Things to correct/improve:
 4. Unverified users cannot be added as contacts. (✔)
 
 New Features yet to be added:
-1. Request money
+1. Request money (✔)
+2. Notifications (adding a contact, transaction, and request)
 
 ### Live [Link](https://bankify-live.netlify.app/)
