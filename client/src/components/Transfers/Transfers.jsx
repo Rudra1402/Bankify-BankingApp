@@ -9,6 +9,7 @@ import CustomLoader from '../../custom/CustomLoader';
 import dummyuser from '../../assets/dummyuser.jpg'
 import { Link } from 'react-router-dom';
 import CustomButton from '../../custom/CustomButton';
+import classNames from 'classnames';
 
 function Transfers() {
 
@@ -40,6 +41,7 @@ function Transfers() {
     const [createPayment, setCreatePayment] = useState(false);
     const [requestMoney, setRequestMoney] = useState(false);
     const [historyAccId, setHistoryAccId] = useState(null);
+    const [tab, setTab] = useState(1);
 
     useEffect(() => {
         if (user) {
@@ -317,94 +319,120 @@ function Transfers() {
                         </div>
                     }
                     <div className='w-1/2 h-full bg-white p-5 flex flex-col gap-3 overflow-y-auto border-l border-l-gray-200'>
-                        {fromAccounts?.length > 0
-                            ? historyLoading
-                                ? <CustomLoader
-                                    rows={1}
-                                    rowClass="!bg-gray-100 flex items-center justify-center"
-                                    text='Loading history...'
-                                    height={"100%"}
-                                    width={"100%"}
-                                />
-                                : <>
-                                    <div className='flex items-center justify-between gap-2'>
-                                        <div className='text-gray-600 underline underline-offset-4'>
-                                            Transfer history
-                                        </div>
-                                        {selContAccOptions && selContAccIds
-                                            ? selContactAccounts?.length == 0
-                                                ? <div className='text-red-500 flex items-center gap-1'>
-                                                    <BiSolidErrorCircle className='text-xl leading-none text-red-500' />
-                                                    No Accounts!
-                                                </div>
-                                                : <select
-                                                    name="toAccount"
-                                                    id="toAccount"
-                                                    className='bg-gray-100 text-gray-600 text-sm leading-none p-2 rounded h-10 w-fit cursor-pointer'
-                                                    onChange={e => {
-                                                        setHistoryAccId(e.target.value)
-                                                    }}
-                                                >
-                                                    {accountOptions?.map((acc, index) => (
-                                                        <option value={accIds[index]} key={index}>{acc}</option>
-                                                    ))}
-                                                </select>
-                                            : null
-                                        }
-                                    </div>
-                                    {history?.length > 0
-                                        ? history?.map((row, index) => {
-                                            const isFromUser = row?.fromAccount?.user?._id == user?.id
-                                                ? 'You'
-                                                : row?.fromAccount?.user?.firstName
-                                            const isToUser = row?.toAccount?.user?._id == user?.id
-                                                ? 'you'
-                                                : row?.toAccount?.user?.firstName
-                                            return (
-                                                <div
-                                                    className='p-2 rounded bg-gray-100 text-gray-600 flex items-center justify-between gap-2'
-                                                    key={index}
-                                                >
-                                                    <div className='flex-1 flex items-center justify-start gap-8 overflow-hidden text-ellipsis line-clamp-1'>
-                                                        <div className='flex flex-col items-center gap-1'>
-                                                            <div className='h-10 w-10 rounded-full border border-gray-300 flex items-center justify-center'>
-                                                                <img
-                                                                    src={row?.fromAccount?.user?.profileImageUrl ? row?.fromAccount?.user?.profileImageUrl : dummyuser}
-                                                                    alt='fromImage'
-                                                                    className='h-10 w-auto rounded-full'
-                                                                />
-                                                            </div>
-                                                            <p>{isFromUser}</p>
-                                                        </div>
-                                                        <div className='flex flex-col gap-0'>
-                                                            ${row?.amount}
-                                                            <div className='text-2xl leading-none'>&rarr;</div>
-                                                        </div>
-                                                        <div className='flex flex-col items-center gap-1'>
-                                                            <div className='h-10 w-10 rounded-full border border-gray-300 flex items-center justify-center'>
-                                                                <img
-                                                                    src={row?.toAccount?.user?.profileImageUrl ? row?.toAccount?.user?.profileImageUrl : dummyuser}
-                                                                    alt='fromImage'
-                                                                    className='h-10 w-auto rounded-full'
-                                                                />
-                                                            </div>
-                                                            <p>{isToUser}</p>
-                                                        </div>
-                                                    </div>
-                                                    <small>{formatTimeSince(row?.date)}</small>
-                                                </div>
-                                            )
-                                        })
-                                        : <div className='text-gray-600'>No transactions involving this account!</div>
-                                    }
-                                </>
-                            : <div className='flex flex-col gap-4 items-center'>
-                                <div className='text-center underline underline-offset-4 text-lg'>No accounts found!</div>
-                                <div className='flex items-center gap-1 justify-center'>
-                                    Go to
-                                    <Link to={'/dashboard/accounts'} className='text-blue-500'>Accounts</Link>
-                                </div>
+                        <div className='flex items-center w-full'>
+                            <div
+                                className={classNames(
+                                    'w-1/2 py-1 text-center rounded-md cursor-pointer',
+                                    tab == 1 ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'
+                                )}
+                                onClick={() => setTab(1)}
+                            >
+                                Transfers
                             </div>
+                            <div
+                                className={classNames(
+                                    'w-1/2 py-1 rounded-md text-center cursor-pointer',
+                                    tab == 2 ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'
+                                )}
+                                onClick={() => setTab(2)}
+                            >
+                                Requests
+                            </div>
+                        </div>
+                        {tab == 1
+                            ? fromAccounts?.length > 0
+                                ? historyLoading
+                                    ? <CustomLoader
+                                        rows={1}
+                                        rowClass="!bg-gray-100 flex items-center justify-center"
+                                        text='Loading history...'
+                                        height={"100%"}
+                                        width={"100%"}
+                                    />
+                                    : <>
+                                        <div className='flex items-center justify-between gap-2'>
+                                            <div className='text-gray-600 underline underline-offset-4'>
+                                                Transfer history
+                                            </div>
+                                            {selContAccOptions && selContAccIds
+                                                ? selContactAccounts?.length == 0
+                                                    ? <div className='text-red-500 flex items-center gap-1'>
+                                                        <BiSolidErrorCircle className='text-xl leading-none text-red-500' />
+                                                        No Accounts!
+                                                    </div>
+                                                    : <select
+                                                        name="toAccount"
+                                                        id="toAccount"
+                                                        className='bg-gray-100 text-gray-600 text-sm leading-none p-2 rounded h-10 w-fit cursor-pointer'
+                                                        onChange={e => {
+                                                            setHistoryAccId(e.target.value)
+                                                        }}
+                                                    >
+                                                        {accountOptions?.map((acc, index) => (
+                                                            <option value={accIds[index]} key={index}>{acc}</option>
+                                                        ))}
+                                                    </select>
+                                                : null
+                                            }
+                                        </div>
+                                        {history?.length > 0
+                                            ? history?.map((row, index) => {
+                                                const isFromUser = row?.fromAccount?.user?._id == user?.id
+                                                    ? 'You'
+                                                    : row?.fromAccount?.user?.firstName
+                                                const isToUser = row?.toAccount?.user?._id == user?.id
+                                                    ? 'you'
+                                                    : row?.toAccount?.user?.firstName
+                                                return (
+                                                    <div
+                                                        className='p-2 rounded bg-gray-100 text-gray-600 flex items-center justify-between gap-2'
+                                                        key={index}
+                                                    >
+                                                        <div className='flex-1 flex items-center justify-start gap-8 overflow-hidden text-ellipsis line-clamp-1'>
+                                                            <div className='flex flex-col items-center gap-1'>
+                                                                <div className='h-10 w-10 rounded-full border border-gray-300 flex items-center justify-center'>
+                                                                    <img
+                                                                        src={row?.fromAccount?.user?.profileImageUrl ? row?.fromAccount?.user?.profileImageUrl : dummyuser}
+                                                                        alt='fromImage'
+                                                                        className='h-10 w-auto rounded-full'
+                                                                    />
+                                                                </div>
+                                                                <p>{isFromUser}</p>
+                                                            </div>
+                                                            <div className='flex flex-col gap-0'>
+                                                                ${row?.amount}
+                                                                <div className='text-2xl leading-none'>&rarr;</div>
+                                                            </div>
+                                                            <div className='flex flex-col items-center gap-1'>
+                                                                <div className='h-10 w-10 rounded-full border border-gray-300 flex items-center justify-center'>
+                                                                    <img
+                                                                        src={row?.toAccount?.user?.profileImageUrl ? row?.toAccount?.user?.profileImageUrl : dummyuser}
+                                                                        alt='fromImage'
+                                                                        className='h-10 w-auto rounded-full'
+                                                                    />
+                                                                </div>
+                                                                <p>{isToUser}</p>
+                                                            </div>
+                                                        </div>
+                                                        <small>{formatTimeSince(row?.date)}</small>
+                                                    </div>
+                                                )
+                                            })
+                                            : <div className='text-gray-600'>No transactions involving this account!</div>
+                                        }
+                                    </>
+                                : <div className='flex flex-col gap-4 items-center'>
+                                    <div className='text-center underline underline-offset-4 text-lg'>No accounts found!</div>
+                                    <div className='flex items-center gap-1 justify-center'>
+                                        Go to
+                                        <Link to={'/dashboard/accounts'} className='text-blue-500'>Accounts</Link>
+                                    </div>
+                                </div>
+                            : <>
+                                <div className='flex items-center justify-between gap-2'>
+                                    Yet to be implemented!
+                                </div>
+                            </>
                         }
                     </div>
                 </div>
