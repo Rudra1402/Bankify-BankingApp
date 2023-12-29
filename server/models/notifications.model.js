@@ -12,6 +12,10 @@ const notificationSchema = new mongoose.Schema({
     notificationType: {
         type: Number,
         required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now()
     }
 });
 

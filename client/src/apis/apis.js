@@ -308,3 +308,12 @@ export const createRequest = async (payload, setRequestMoney, setReRender) => {
             Toast.error(err?.response?.data?.message);
         })
 }
+
+export const getNotifications = async (userid, setNotifs) => {
+    await api.get(`/notifications/${userid}`)
+        .then(response => {
+            setNotifs(response.data?.notifications);
+        }).catch(err => {
+            Toast.error(err?.response?.data?.message);
+        })
+}

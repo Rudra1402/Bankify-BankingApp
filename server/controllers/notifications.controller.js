@@ -12,7 +12,8 @@ router.get('/notifications/:userid', async (req, res) => {
             return res.status(403).json({ message: "User not found!" });
         }
 
-        const notifications = await Notification.find({ to: userid });
+        const notifications = await Notification.find({ to: userid })
+            .populate('from', 'username firstName lastName');
 
         res.status(200).json({ message: "Notifications fetched!", notifications });
     } catch (error) {
