@@ -13,7 +13,8 @@ router.get('/notifications/:userid', async (req, res) => {
         }
 
         const notifications = await Notification.find({ to: userid })
-            .populate('from', 'username firstName lastName');
+            .populate('from', 'username firstName lastName')
+            .sort({ date: -1 });
 
         res.status(200).json({ message: "Notifications fetched!", notifications });
     } catch (error) {
