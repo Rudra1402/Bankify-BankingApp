@@ -15,9 +15,10 @@ Things to correct/improve:
 2. Email update should resend verification email. (✔)
 3. Forgot password. (✔)
 4. Unverified users cannot be added as contacts. (✔)
+5. Will convert simple notifications into web-sockets based notifications
 
 New Features yet to be added:
 1. Request money (✔)
-2. Notifications (adding a contact, transaction, and request)
+2. Notifications (adding a contact, transaction, and request) (✔)
 
 ### Live [Link](https://bankify-live.netlify.app/)
