@@ -309,6 +309,16 @@ export const createRequest = async (payload, setRequestMoney, setReRender) => {
         })
 }
 
+export const getRequests = async (userId, setRequests, setLoading) => {
+    await api.get(`/requests/${userId}`)
+        .then(response => {
+            setRequests(response.data?.userRequests)
+            setLoading(false);
+        }).catch(err => {
+            Toast.error(err?.response?.data?.message);
+        })
+}
+
 export const getNotifications = async (userid, setNotifs) => {
     await api.get(`/notifications/${userid}`)
         .then(response => {

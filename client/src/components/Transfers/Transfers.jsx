@@ -10,6 +10,7 @@ import dummyuser from '../../assets/dummyuser.jpg'
 import { Link } from 'react-router-dom';
 import CustomButton from '../../custom/CustomButton';
 import classNames from 'classnames';
+import Requests from './Requests';
 
 function Transfers() {
 
@@ -429,9 +430,7 @@ function Transfers() {
                                     </div>
                                 </div>
                             : <>
-                                <div className='flex items-center justify-between gap-2'>
-                                    Yet to be implemented!
-                                </div>
+                                <Requests />
                             </>
                         }
                     </div>

@@ -32,7 +32,7 @@ router.post('/request', async (req, res) => {
 
         const newRequest = new Request({
             account: yourAccount._id,
-            contact: requestContact._id,
+            contactUser: contactUser._id,
             amount: amount
         })
 
@@ -54,13 +54,28 @@ router.get('/requests/:userid', async (req, res) => {
             return res.status(403).json({ message: "User not found!" });
         }
 
-        const userAccounts = Account.find({ user: userid });
+        const contact = await Contact.findOne({ owner: userid });
 
-        if (!userAccounts) {
-            return res.status(403).json({ message: "No accounts associated with the user!" })
+        if (!contact) {
+            return res.status(403).json({ message: 'Contact owner not found!' });
         }
 
-        res.status(200).json({ message: "Accounts found associated with the user!", userAccounts });
+        const userRequests = await Request.find({ contactUser: userid })
+            .sort({ date: -1 })
+            .populate({
+                path: 'account',
+                model: 'Account',
+                populate: {
+                    path: 'user',
+                    model: 'User',
+                    select: 'username firstName lastName',
+                }
+            });
+
+        res.status(200).json({
+            message: "Requests associated with the user!",
+            userRequests
+        });
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch requests!' });
     }
