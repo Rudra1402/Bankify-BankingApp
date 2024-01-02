@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
     account: { type: mongoose.Schema.Types.ObjectId, ref: 'Account' },
-    contactUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    fromUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    toUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     amount: { type: Number, required: true },
     date: { type: Date, default: Date.now() }
 });

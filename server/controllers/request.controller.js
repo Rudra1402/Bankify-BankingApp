@@ -32,7 +32,8 @@ router.post('/request', async (req, res) => {
 
         const newRequest = new Request({
             account: yourAccount._id,
-            contactUser: contactUser._id,
+            fromUser: yourAccount.user,
+            toUser: contactUser._id,
             amount: amount
         })
 
@@ -45,7 +46,7 @@ router.post('/request', async (req, res) => {
     }
 })
 
-router.get('/requests/:userid', async (req, res) => {
+router.get('/requests/incoming/:userid', async (req, res) => {
     const { userid } = req.params;
     try {
         const user = await User.findById(userid);
@@ -60,7 +61,7 @@ router.get('/requests/:userid', async (req, res) => {
             return res.status(403).json({ message: 'Contact owner not found!' });
         }
 
-        const userRequests = await Request.find({ contactUser: userid })
+        const userRequests = await Request.find({ toUser: userid })
             .sort({ date: -1 })
             .populate({
                 path: 'account',
@@ -70,6 +71,38 @@ router.get('/requests/:userid', async (req, res) => {
                     model: 'User',
                     select: 'username firstName lastName',
                 }
+            });
+
+        res.status(200).json({
+            message: "Requests associated with the user!",
+            userRequests
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch requests!' });
+    }
+})
+
+router.get('/requests/outgoing/:userid', async (req, res) => {
+    const { userid } = req.params;
+    try {
+        const user = await User.findById(userid);
+
+        if (!user) {
+            return res.status(403).json({ message: "User not found!" });
+        }
+
+        const contact = await Contact.findOne({ owner: userid });
+
+        if (!contact) {
+            return res.status(403).json({ message: 'Contact owner not found!' });
+        }
+
+        const userRequests = await Request.find({ fromUser: userid })
+            .sort({ date: -1 })
+            .populate({
+                path: 'toUser',
+                model: 'User',
+                select: 'username firstName lastName'
             });
 
         res.status(200).json({

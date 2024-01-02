@@ -309,8 +309,18 @@ export const createRequest = async (payload, setRequestMoney, setReRender) => {
         })
 }
 
-export const getRequests = async (userId, setRequests, setLoading) => {
-    await api.get(`/requests/${userId}`)
+export const getIncomingRequests = async (userId, setRequests, setLoading) => {
+    await api.get(`/requests/incoming/${userId}`)
+        .then(response => {
+            setRequests(response.data?.userRequests)
+            setLoading(false);
+        }).catch(err => {
+            Toast.error(err?.response?.data?.message);
+        })
+}
+
+export const getOutgoingRequests = async (userId, setRequests, setLoading) => {
+    await api.get(`/requests/outgoing/${userId}`)
         .then(response => {
             setRequests(response.data?.userRequests)
             setLoading(false);

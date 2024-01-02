@@ -15,7 +15,12 @@ function Navbar({ user, setUser }) {
         }
     }, [user]);
     const viewNotifications = (
-        <div className='absolute top-8 right-0 bg-gray-200 text-gray-700 rounded-md p-2 w-96 h-fit max-h-[476px] overflow-y-auto flex flex-col gap-y-2 z-40 shadow-md border border-gray-300'>
+        <div
+            className='absolute top-8 right-0 bg-gray-200 text-gray-700 rounded-md p-2 w-96 h-fit max-h-[476px] overflow-y-auto flex flex-col gap-y-2 z-40 shadow-md border border-gray-300'
+        >
+            <div className='text-lg leading-none p-1 text-gray-800'>
+                Notifications ({notifs?.length})
+            </div>
             {notifs?.length > 0
                 ? notifs?.map((notif, index) => {
                     let notifMessage;
