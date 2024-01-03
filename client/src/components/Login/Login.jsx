@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import CustomForm from '../../custom/CustomForm'
 import CustomInput from '../../custom/CustomInput'
 import CustomButton from '../../custom/CustomButton'
@@ -8,6 +8,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { userLogin } from '../../apis/apis'
 import AppContext from '../../context/AppContext'
 import Toast from '../../custom/CustomToast'
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import classNames from 'classnames'
 
 const validationSchema = Yup.object({
     email: Yup.string().email().required('Email is required!'),
@@ -18,6 +20,7 @@ function Login({ setPage }) {
 
     const { user, setUser } = useContext(AppContext);
     const navigate = useNavigate();
+    const [viewPass, setViewPass] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -60,10 +63,10 @@ function Login({ setPage }) {
                     value={formik.values.email}
                     onChange={e => formik.setFieldValue("email", e.target.value)}
                 />
-                <div className='flex flex-col gap-1'>
+                <div className='flex flex-col gap-1 relative'>
                     <CustomInput
                         name={"password"}
-                        type='password'
+                        type={viewPass ? 'text' : 'password'}
                         required={true}
                         size='large'
                         placeholder="Password"
@@ -71,6 +74,26 @@ function Login({ setPage }) {
                         value={formik.values.password}
                         onChange={e => formik.setFieldValue("password", e.target.value)}
                     />
+                    {viewPass == false
+                        ? <IoMdEye
+                            className={classNames(
+                                'text-gray-600 text-xl leading-none cursor-pointer',
+                                'absolute top-5 right-3'
+                            )}
+                            onClick={() => setViewPass(true)}
+                        />
+                        : null
+                    }
+                    {viewPass == true
+                        ? <IoMdEyeOff
+                            className={classNames(
+                                'text-gray-600 text-xl leading-none cursor-pointer',
+                                'absolute top-5 right-3'
+                            )}
+                            onClick={() => setViewPass(false)}
+                        />
+                        : null
+                    }
                     <Link
                         className='text-blue-500 w-full flex justify-end text-sm'
                         to={'/forgot-password'}
