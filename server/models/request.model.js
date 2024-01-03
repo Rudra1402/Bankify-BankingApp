@@ -5,6 +5,8 @@ const requestSchema = new mongoose.Schema({
     fromUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     toUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     amount: { type: Number, required: true },
+    pending: { type: Boolean, default: true },
+    isReqAccepted: { type: Boolean, default: null },
     date: { type: Date, default: Date.now() }
 });
 
