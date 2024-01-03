@@ -15,6 +15,7 @@ Things to correct/improve:
 2. Email update should resend verification email. (✔)
 3. Forgot password. (✔)
 4. Unverified users cannot be added as contacts. (✔)
+5. Handling pending state of requests, initiating and declining requests.
 
 New Features yet to be added:
 1. Request money (✔)
