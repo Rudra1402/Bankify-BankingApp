@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react';
-import { getIncomingRequests, getOutgoingRequests } from '../../apis/apis';
+import { getIncomingRequests, getOutgoingRequests, requestDecline } from '../../apis/apis';
 import AppContext from '../../context/AppContext';
 import CustomButton from '../../custom/CustomButton';
 import CustomCard from '../../custom/CustomCard'
@@ -14,6 +14,8 @@ function Requests({ reRender }) {
     const [reqs, setReqs] = useState(null);
     const [loading, setLoading] = useState(true);
     const [tab, setTab] = useState(1);
+    const [selectedReqId, setSelectedReqId] = useState(null);
+    const [internalReRender, setInternalReRender] = useState(new Date().getTime())
     useEffect(() => {
         if (user && tab == 1) {
             setLoading(true)
@@ -23,7 +25,7 @@ function Requests({ reRender }) {
             setLoading(true)
             getOutgoingRequests(user.id, setReqs, setLoading)
         }
-    }, [user, tab, reRender])
+    }, [user, tab, reRender, internalReRender])
     return (
         <CustomCard className='h-full w-full flex flex-col items-center justify-start gap-2'>
             <div className='flex items-center w-full pb-1'>
@@ -67,18 +69,28 @@ function Requests({ reRender }) {
                                         </div>
                                     </div>
                                     {/* <hr className='w-full' /> */}
-                                    <div className='flex items-center justify-end w-full gap-x-2 pt-1'>
-                                        <CustomButton
-                                            text='Initiate request'
-                                            size='small'
-                                            className='!text-xs !w-fit !px-2 !py-1 !h-fit !bg-green-600'
-                                        />
-                                        <CustomButton
-                                            text='Decline'
-                                            size='small'
-                                            className='!text-xs !w-fit !px-2 !py-1 !h-fit'
-                                        />
-                                    </div>
+                                    {req?.pending
+                                        ? <div className='flex items-center justify-end w-full gap-x-2 pt-1'>
+                                            <CustomButton
+                                                text='Initiate request'
+                                                size='small'
+                                                className='!text-xs !w-fit !px-2 !py-1 !h-fit !bg-green-600'
+                                            />
+                                            <CustomButton
+                                                text='Decline'
+                                                size='small'
+                                                className='!text-xs !w-fit !px-2 !py-1 !h-fit'
+                                                onClick={() => requestDecline(req?._id, setInternalReRender)}
+                                            />
+                                        </div>
+                                        : <div
+                                            className='text-sm leading-none text-gray-600'
+                                        >
+                                            {req?.isReqAccepted
+                                                ? "You accepted the request!"
+                                                : "You declined the request!"}
+                                        </div>
+                                    }
                                 </div>
                             ))
                             : <div className='text-center'>No new requests</div>

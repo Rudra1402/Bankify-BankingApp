@@ -114,4 +114,24 @@ router.get('/requests/outgoing/:userid', async (req, res) => {
     }
 })
 
+router.put('/request-decline/:reqid', async (req, res) => {
+    try {
+        const { reqid } = req.params;
+
+        const request = await Request.findById(reqid);
+
+        if (!request) {
+            return res.status(403).json({ message: "Request not found!" });
+        }
+
+        request.pending = false;
+        request.isReqAccepted = false;
+        request.save();
+
+        res.status(200).json({ message: "Request declined successfully!" })
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to decline the request!' });
+    }
+})
+
 module.exports = router;

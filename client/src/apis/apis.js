@@ -337,3 +337,13 @@ export const getNotifications = async (userid, setNotifs) => {
             Toast.error(err?.response?.data?.message);
         })
 }
+
+export const requestDecline = async (reqid, setReRender) => {
+    await api.put(`/request-decline/${reqid}`)
+        .then(response => {
+            Toast.success(response.data?.message)
+            setReRender(new Date().getTime())
+        }).catch(err => {
+            Toast.error(err?.response?.data?.message)
+        })
+}
