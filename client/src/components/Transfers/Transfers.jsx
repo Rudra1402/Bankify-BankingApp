@@ -430,7 +430,7 @@ function Transfers() {
                                     </div>
                                 </div>
                             : <>
-                                <Requests />
+                                <Requests reRender={reRender} />
                             </>
                         }
                     </div>

@@ -8,7 +8,7 @@ import CustomCard from '../../custom/CustomCard'
 import CustomLoader from '../../custom/CustomLoader';
 import { formatTimeSince } from '../../utils/timesince';
 
-function Requests() {
+function Requests({ reRender }) {
     const { user } = useContext(AppContext);
     const [reqs, setReqs] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ function Requests() {
             setLoading(true)
             getOutgoingRequests(user.id, setReqs, setLoading)
         }
-    }, [user, tab])
+    }, [user, tab, reRender])
     return (
         <CustomCard className='h-full w-full flex flex-col items-center justify-start gap-2'>
             <div className='flex items-center w-full pb-1'>

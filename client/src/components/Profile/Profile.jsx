@@ -11,11 +11,12 @@ import { userById, updateUrl, changePassword, updateUserApi } from '../../apis/a
 import CustomLoader from '../../custom/CustomLoader'
 import classNames from 'classnames'
 import CustomCard from '../../custom/CustomCard'
+import { IoMdEye, IoMdEyeOff } from 'react-icons/io'
 
 function Profile() {
 
     const { user, setUser, openSidebar } = useContext(AppContext);
-    const [profileCompletionPct, setProfileCompletionPct] = useState(0); // Update profile % logic
+    const [profileCompletionPct, setProfileCompletionPct] = useState(0);
 
     const [profile, setProfile] = useState(null);
     const [profileImg, setProfileImg] = useState(null);
@@ -32,6 +33,8 @@ function Profile() {
         username: profile?.username
     });
     const [reRender, setReRender] = useState(new Date().getTime());
+    const [viewCurrPass, setViewCurrPass] = useState(false);
+    const [viewNewPass, setViewNewPass] = useState(false);
 
     useEffect(() => {
         let userItem = JSON.parse(localStorage.getItem('user'))
@@ -171,22 +174,54 @@ function Profile() {
                         <hr className='my-1' />
                         <div className='text-xl leading-none mt-2 text-gray-700 underline underline-offset-4'>Change Password</div>
                         <div className='flex items-center gap-8'>
-                            <CustomInput
-                                label={"Current Password"}
-                                placeholder="Current password"
-                                value={currPassword}
-                                onChange={(e) => setCurrPassword(e.target.value)}
-                                size='large'
-                                type='password'
-                            />
-                            <CustomInput
-                                label={"New Password"}
-                                placeholder="New password"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                size='large'
-                                type='password'
-                            />
+                            <div className='relative'>
+                                <CustomInput
+                                    label={"Current Password"}
+                                    placeholder="Current password"
+                                    value={currPassword}
+                                    onChange={(e) => setCurrPassword(e.target.value)}
+                                    size='large'
+                                    type={viewCurrPass ? 'text' : 'password'}
+                                />
+                                {viewCurrPass == false
+                                    ? <IoMdEye
+                                        className='text-xl leading-none cursor-pointer absolute top-10 right-3 text-gray-600'
+                                        onClick={() => setViewCurrPass(true)}
+                                    />
+                                    : null
+                                }
+                                {viewCurrPass == true
+                                    ? <IoMdEyeOff
+                                        className='text-xl leading-none cursor-pointer absolute top-10 right-3 text-gray-600'
+                                        onClick={() => setViewCurrPass(false)}
+                                    />
+                                    : null
+                                }
+                            </div>
+                            <div className='relative'>
+                                <CustomInput
+                                    label={"New Password"}
+                                    placeholder="New password"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    size='large'
+                                    type={viewNewPass ? 'text' : 'password'}
+                                />
+                                {viewNewPass == false
+                                    ? <IoMdEye
+                                        className='text-xl leading-none cursor-pointer absolute top-10 right-3 text-gray-600'
+                                        onClick={() => setViewNewPass(true)}
+                                    />
+                                    : null
+                                }
+                                {viewNewPass == true
+                                    ? <IoMdEyeOff
+                                        className='text-xl leading-none cursor-pointer absolute top-10 right-3 text-gray-600'
+                                        onClick={() => setViewNewPass(false)}
+                                    />
+                                    : null
+                                }
+                            </div>
                         </div>
                         <CustomButton
                             text='Update Password'

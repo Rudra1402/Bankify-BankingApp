@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CustomButton from '../../custom/CustomButton'
 import CustomForm from '../../custom/CustomForm'
 import CustomInput from '../../custom/CustomInput'
@@ -6,6 +6,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { userRegister } from '../../apis/apis'
 import { Link } from 'react-router-dom'
+import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 const validationSchema = Yup.object({
     username: Yup.string().required('Username is required!'),
@@ -14,6 +15,8 @@ const validationSchema = Yup.object({
 })
 
 function Register({ setPage }) {
+
+    const [viewPass, setViewPass] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -55,16 +58,32 @@ function Register({ setPage }) {
                     value={formik.values.email}
                     onChange={e => formik.setFieldValue("email", e.target.value)}
                 />
-                <CustomInput
-                    name={"password"}
-                    type='password'
-                    required={true}
-                    size='large'
-                    placeholder="Password"
-                    extraClass='!border-gray-300'
-                    value={formik.values.password}
-                    onChange={e => formik.setFieldValue("password", e.target.value)}
-                />
+                <div className='relative'>
+                    <CustomInput
+                        name={"password"}
+                        type={viewPass ? 'text' : 'password'}
+                        required={true}
+                        size='large'
+                        placeholder="Password"
+                        extraClass='!border-gray-300'
+                        value={formik.values.password}
+                        onChange={e => formik.setFieldValue("password", e.target.value)}
+                    />
+                    {viewPass == false
+                        ? <IoMdEye
+                            className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                            onClick={() => setViewPass(true)}
+                        />
+                        : null
+                    }
+                    {viewPass == true
+                        ? <IoMdEyeOff
+                            className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                            onClick={() => setViewPass(false)}
+                        />
+                        : null
+                    }
+                </div>
                 <CustomButton
                     text="Register"
                     size='small'
