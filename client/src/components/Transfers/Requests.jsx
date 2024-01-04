@@ -7,6 +7,7 @@ import CustomButton from '../../custom/CustomButton';
 import CustomCard from '../../custom/CustomCard'
 import CustomLoader from '../../custom/CustomLoader';
 import { formatTimeSince } from '../../utils/timesince';
+import { GoDotFill } from "react-icons/go";
 
 function Requests({ reRender }) {
     const { user } = useContext(AppContext);
@@ -108,6 +109,21 @@ function Requests({ reRender }) {
                                         <div className='text-sm leading-none whitespace-nowrap'>
                                             {formatTimeSince(req?.date)}
                                         </div>
+                                    </div>
+                                    <div className='flex items-center gap-0.5 text-xs leading-none'>
+                                        {req?.pending
+                                            ? "Pending"
+                                            : req?.isReqAccepted
+                                                ? "Accepted"
+                                                : "Declined"
+                                        }
+                                        <GoDotFill className={classNames(
+                                            req?.pending
+                                                ? 'text-gray-500'
+                                                : req?.isReqAccepted
+                                                    ? 'text-green-500'
+                                                    : 'text-red-500'
+                                        )} />
                                     </div>
                                 </div>
                             ))
