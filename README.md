@@ -10,15 +10,15 @@
 7. Transfer funds to your contacts.
 8. Print/View account statements.
 
-Things to correct/improve:
+**New Features yet to be added:**
+1. Request money (✔)
+2. Notifications (adding a contact, transaction, and request) (✔)
+
+**Things to correct/improve:**
 1. Transactions with 0 amount cannot be processed (Toast notification). (✔)
 2. Email update should resend verification email. (✔)
 3. Forgot password. (✔)
 4. Unverified users cannot be added as contacts. (✔)
-5. Handling pending state of requests, initiating and declining requests.
-
-New Features yet to be added:
-1. Request money (✔)
-2. Notifications (adding a contact, transaction, and request) (✔)
+5. Handling pending state of requests, initiating and declining requests. (✔) (Looking for any bugs or logical errors)
 
 ### Live [Link](https://bankify-live.netlify.app/)
