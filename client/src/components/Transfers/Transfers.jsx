@@ -303,20 +303,25 @@ function Transfers() {
                             <div className='w-full text-lg leading-6 bg-slate-100 p-2 rounded'>&#8226; Send money to your friends, family or business related purposes.</div>
                             <div className='w-full text-lg leading-6 bg-slate-100 p-2 rounded'>&#8226; You can also monitor your transaction history.</div>
                             <div className='w-full text-lg leading-6 bg-slate-100 p-2 rounded'>&#8226; Add accounts and track your history.</div>
-                            <div className='flex items-center gap-x-3'>
-                                <CustomButton
-                                    text="Send money"
-                                    className='mt-4 !text-sm !w-36 py-2'
-                                    size='none'
-                                    onClick={() => setCreatePayment(true)}
-                                />
-                                <CustomButton
-                                    text="Request money"
-                                    className='mt-4 !text-sm !w-36 py-2'
-                                    size='none'
-                                    onClick={() => setRequestMoney(true)}
-                                />
-                            </div>
+                            {fromAccounts?.length > 0
+                                ? <div className='flex items-center gap-x-3'>
+                                    <CustomButton
+                                        text="Send money"
+                                        className='mt-4 !text-sm !w-36 py-2'
+                                        size='none'
+                                        onClick={() => setCreatePayment(true)}
+                                    />
+                                    <CustomButton
+                                        text="Request money"
+                                        className='mt-4 !text-sm !w-36 py-2'
+                                        size='none'
+                                        onClick={() => setRequestMoney(true)}
+                                    />
+                                </div>
+                                : <div className='p-2 text-center bg-red-300 text-gray-800 rounded text-base leading-5'>
+                                    You should add atleast one account for transactions and requests!
+                                </div>
+                            }
                         </div>
                     }
                     <div className='w-1/2 h-full bg-white p-5 flex flex-col gap-3 overflow-y-auto border-l border-l-gray-200'>
