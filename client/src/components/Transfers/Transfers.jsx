@@ -45,6 +45,7 @@ function Transfers() {
     const [tab, setTab] = useState(1);
 
     useEffect(() => {
+        document.title = "Bankify | Transfers"
         if (user) {
             findAccountsById(user?.id, setFromAccounts)
             findContactsById(user?.id, setFromContacts, setLoading)

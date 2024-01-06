@@ -70,6 +70,7 @@ function Accounts() {
     )
 
     useEffect(() => {
+        document.title = "Bankify | Accounts"
         if (user) {
             findAccountsById(user?.id, setAccounts)
             findTotalBalance(user?.id, setTotalBalance)

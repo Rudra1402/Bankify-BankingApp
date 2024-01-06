@@ -10,6 +10,10 @@ function Homepage() {
     const [view, setView] = useState(true);
 
     useEffect(() => {
+        if (page === "login")
+            document.title = "Bankify | Login"
+        else
+            document.title = "Bankify | Register"
     }, [page])
 
     return (

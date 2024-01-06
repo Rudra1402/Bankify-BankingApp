@@ -23,6 +23,7 @@ function Dashboard() {
 
     useEffect(() => {
         setLoading(true)
+        document.title = "Bankify | Dashboard"
         if (user) {
             dashboardData(user?.id, setData, setLoading)
             historyByUserId(user?.id, setfirst, setLoading)

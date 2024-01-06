@@ -63,6 +63,7 @@ function Contacts() {
     )
 
     useEffect(() => {
+        document.title = "Bankify | Contacts"
         setLoading(true)
         if (user) {
             findContactsById(user?.id, setContacts, setLoading)

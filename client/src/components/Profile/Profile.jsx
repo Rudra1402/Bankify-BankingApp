@@ -37,6 +37,7 @@ function Profile() {
     const [viewNewPass, setViewNewPass] = useState(false);
 
     useEffect(() => {
+        document.title = "Bankify | Profile"
         let userItem = JSON.parse(localStorage.getItem('user'))
         if (userItem?.token || isImgUploaded) {
             userById(userItem?.id, setProfile, setLoading)
