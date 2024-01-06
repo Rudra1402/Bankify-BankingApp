@@ -13,7 +13,7 @@ router.post('/transfer', async (req, res) => {
         const destinationAccount = await Account.findById(toAccount);
 
         if (!sourceAccount || !destinationAccount) {
-            return res.status(404).json({ success: false, message: 'One or both accounts not found!' });
+            return res.status(403).json({ success: false, message: 'One or both accounts not found!' });
         }
 
         if (sourceAccount.balance < amount) {
@@ -41,7 +41,7 @@ router.post('/transfer', async (req, res) => {
         await sourceAccount.save();
         await destinationAccount.save();
 
-        res.json({ success: true, message: 'Funds transferred successfully' });
+        res.status(200).json({ success: true, message: 'Funds transferred successfully' });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Transfer failed' });
     }

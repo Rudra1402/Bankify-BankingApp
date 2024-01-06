@@ -430,7 +430,12 @@ function Transfers() {
                                     </div>
                                 </div>
                             : <>
-                                <Requests reRender={reRender} />
+                                <Requests
+                                    reRender={reRender}
+                                    setReRender={setReRender}
+                                    accounts={accountOptions}
+                                    accountIds={accIds}
+                                />
                             </>
                         }
                     </div>

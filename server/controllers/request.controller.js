@@ -32,6 +32,7 @@ router.post('/request', async (req, res) => {
 
         const newRequest = new Request({
             account: yourAccount._id,
+            contact: requestContact._id,
             fromUser: yourAccount.user,
             toUser: contactUser._id,
             amount: amount
@@ -131,6 +132,43 @@ router.put('/request-decline/:reqid', async (req, res) => {
         res.status(200).json({ message: "Request declined successfully!" })
     } catch (error) {
         res.status(500).json({ message: 'Failed to decline the request!' });
+    }
+})
+
+router.put('/request-initiate/:reqid', async (req, res) => {
+    try {
+        const { reqid } = req.params;
+        const { fromAccount, toAccount, amount } = req.body;
+
+        const request = await Request.findById(reqid);
+
+        if (!request) {
+            return res.status(403).json({ message: "Request not found!" });
+        }
+
+        const body = {
+            fromAccount,
+            toAccount,
+            amount
+        };
+
+        const postTransaction = await fetch('http://localhost:8000/api/transfer', {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await postTransaction.json();
+        if (postTransaction.status != 200) {
+            return res.status(400).json({ message: data?.message })
+        }
+
+        request.pending = false;
+        request.isReqAccepted = true;
+        request.save();
+
+        res.status(200).json({ message: "Request accepted successfully!" })
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to initiate the request!' });
     }
 })
 

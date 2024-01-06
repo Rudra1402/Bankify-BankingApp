@@ -347,3 +347,18 @@ export const requestDecline = async (reqid, setReRender) => {
             Toast.error(err?.response?.data?.message)
         })
 }
+
+export const requestAccept = async (reqid, toAccount, fromAccount, amount, setInitiateReq, setIntReRender, setReRender) => {
+    await api.put(`/request-initiate/${reqid}`, {
+        fromAccount,
+        toAccount,
+        amount
+    }).then(response => {
+        setIntReRender(new Date().getTime());
+        setReRender(new Date().getTime());
+        setInitiateReq(false);
+        Toast.success(response.data?.message);
+    }).catch(err => {
+        Toast.error(err?.response?.data?.message);
+    })
+}
