@@ -22,8 +22,8 @@
 5. Handling pending state of requests, initiating and declining requests. (✔) (Looking for any bugs or logical errors)
 6. Email verification is only working in localhost and not working in the production environment.
 
-Sample User Credentials:
-email: jonsnow@yopmail.com
+Sample User Credentials:  
+email: jonsnow@yopmail.com  
 password: js123
 
 ### Live [Link](https://bankify-live.netlify.app/)
