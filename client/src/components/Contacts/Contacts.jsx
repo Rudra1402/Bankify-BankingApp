@@ -39,7 +39,7 @@ function Contacts() {
                     label='Contact Name'
                     name="name"
                     placeholder="Contact name"
-                    extraClass='!bg-white'
+                    extraClass='!bg-white !border !border-gray-400'
                     type='text'
                     value={contactInfo.name}
                     onChange={handleAccountChange}
@@ -48,7 +48,7 @@ function Contacts() {
                     labelClass='!text-gray-600'
                     label='Email'
                     name="email"
-                    extraClass='!bg-white'
+                    extraClass='!bg-white !border !border-gray-400'
                     placeholder="Email"
                     type='email'
                     value={contactInfo.email}

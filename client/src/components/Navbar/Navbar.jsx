@@ -5,24 +5,22 @@ import dummyuser from '../../assets/dummyuser.jpg'
 import { IoIosNotifications } from "react-icons/io";
 import { getNotifications } from '../../apis/apis';
 import { formatTimeSince } from '../../utils/timesince';
+import { useContext } from 'react';
+import AppContext from '../../context/AppContext';
 
 function Navbar({ user, setUser }) {
-    const [notifs, setNotifs] = useState(null);
+    const { notifications, setNotifications } = useContext(AppContext);
     const [viewNotifs, setViewNotifs] = useState(false);
-    useEffect(() => {
-        if (user) {
-            getNotifications(user?.id, setNotifs);
-        }
-    }, [user]);
+
     const viewNotifications = (
         <div
             className='absolute top-8 right-0 bg-gray-200 text-gray-700 rounded-md p-2 w-96 h-fit max-h-[476px] overflow-y-auto flex flex-col gap-y-2 z-40 shadow-md border border-gray-300'
         >
             <div className='text-lg leading-none p-1 text-gray-800'>
-                Notifications ({notifs?.length})
+                Notifications ({notifications?.length})
             </div>
-            {notifs?.length > 0
-                ? notifs?.map((notif, index) => {
+            {notifications?.length > 0
+                ? notifications?.map((notif, index) => {
                     let notifMessage;
                     if (notif?.notificationType == 1)
                         notifMessage = " added you as a contact!";
@@ -69,7 +67,7 @@ function Navbar({ user, setUser }) {
                             setViewNotifs(false);
                     }}
                 >
-                    {notifs?.length}
+                    {notifications?.length}
                 </div>
             </div>
             <Link
