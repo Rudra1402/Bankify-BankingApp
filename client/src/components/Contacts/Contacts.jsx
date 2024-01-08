@@ -1,9 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { MdDelete } from 'react-icons/md'
 import { RxCross1 } from 'react-icons/rx'
-import { addContact, findContactsById } from '../../apis/apis'
+import { addContact, deleteContact, findContactsById } from '../../apis/apis'
 import AppContext from '../../context/AppContext'
 import CustomCard from '../../custom/CustomCard'
+import CustomDialog from '../../custom/CustomDialog'
 import CustomInput from '../../custom/CustomInput'
 import CustomLoader from '../../custom/CustomLoader'
 import DashboardLayout from '../../Layouts/DashboardLayout'
@@ -13,6 +15,8 @@ function Contacts() {
     const { user } = useContext(AppContext);
 
     const [openAddContact, setOpenAddContact] = useState(false)
+    const [deleteContactDialog, setDeleteContactDialog] = useState(false);
+    const [selectedContact, setSelectedContact] = useState(null);
     const [contactInfo, setContactInfo] = useState({
         name: '',
         email: '',
@@ -82,6 +86,18 @@ function Contacts() {
                 />
                 : <div className='w-full h-full p-4 flex flex-col gap-6 relative'>
                     {openAddContact ? addContactDialog : null}
+                    {deleteContactDialog
+                        ? <CustomDialog
+                            setDialog={setDeleteContactDialog}
+                            title='Delete Contact'
+                            message={`Are you sure want to delete ${selectedContact?.name} as your contact?`}
+                            yesTitle='Delete'
+                            noTitle='Cancel'
+                            onYes={() => deleteContact(selectedContact?._id, setReRender, setDeleteContactDialog)}
+                            onNo={() => setDeleteContactDialog(false)}
+                        />
+                        : null
+                    }
                     <div className='flex justify-between items-center'>
                         <div className='flex items-center gap-6'>
                             <div className='text-2xl leading-none'>Your Contacts</div>
@@ -98,8 +114,15 @@ function Contacts() {
                             ? contacts?.map((contact, index) => (
                                 <CustomCard
                                     key={index}
-                                    className='py-3 px-6 rounded bg-gray-100 text-gray-700 cursor-pointer w-[calc(33%-10px)]'
+                                    className='py-3 px-6 rounded bg-gray-100 text-gray-700 cursor-pointer w-[calc(33%-10px)] relative'
                                 >
+                                    <MdDelete
+                                        className='text-red-500 absolute text-lg leading-none top-3 right-3'
+                                        onClick={() => {
+                                            setDeleteContactDialog(true)
+                                            setSelectedContact(contact)
+                                        }}
+                                    />
                                     <div className='text-xl'>{contact?.name}</div>
                                     <div className='text-sm'>{contact?.email}</div>
                                 </CustomCard>

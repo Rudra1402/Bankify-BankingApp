@@ -362,3 +362,24 @@ export const requestAccept = async (reqid, toAccount, fromAccount, amount, setIn
         Toast.error(err?.response?.data?.message);
     })
 }
+
+export const deleteContact = async (contactId, setReRender, setDeleteContactDialog) => {
+    await api.delete(`/delete-contact/${contactId}`)
+        .then(response => {
+            Toast.error(response.data?.message);
+            setDeleteContactDialog(false);
+            setReRender(new Date().getTime());
+        }).catch(err => {
+            Toast.error(err?.response?.data?.message);
+        })
+}
+
+export const deleteAccountt = async (accountId, setReRender) => {
+    await api.delete(`/delete-account/${accountId}`)
+        .then(response => {
+            Toast.error(response.data?.message);
+            setReRender(new Date().getTime());
+        }).catch(err => {
+            Toast.error(err?.response?.data?.message);
+        })
+}
