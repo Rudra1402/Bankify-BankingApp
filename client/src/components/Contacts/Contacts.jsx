@@ -32,7 +32,7 @@ function Contacts() {
     };
 
     const addContactDialog = (
-        <div className='h-full w-full bg-[#000b] absolute top-0 left-0 right-0 bottom-0 rounded-md'>
+        <div className='h-full w-full bg-[#000b] absolute top-0 left-0 right-0 bottom-0 rounded-md z-30'>
             <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-fit w-fit p-4 rounded-md bg-gray-100 flex flex-col gap-3'>
                 <RxCross1
                     className='absolute -top-3 -right-3 cursor-pointer text-3xl leading-none bg-red-400 rounded-full p-1 text-white'
@@ -87,15 +87,17 @@ function Contacts() {
                 : <div className='w-full h-full p-4 flex flex-col gap-6 relative'>
                     {openAddContact ? addContactDialog : null}
                     {deleteContactDialog
-                        ? <CustomDialog
-                            setDialog={setDeleteContactDialog}
-                            title='Delete Contact'
-                            message={`Are you sure want to delete ${selectedContact?.name} as your contact?`}
-                            yesTitle='Delete'
-                            noTitle='Cancel'
-                            onYes={() => deleteContact(selectedContact?._id, setReRender, setDeleteContactDialog)}
-                            onNo={() => setDeleteContactDialog(false)}
-                        />
+                        ? <div className='h-full w-full bg-[#000b] absolute top-0 left-0 right-0 bottom-0 rounded-md z-30'>
+                            <CustomDialog
+                                setDialog={setDeleteContactDialog}
+                                title='Delete Contact'
+                                message={`Are you sure want to delete ${selectedContact?.name} as your contact?`}
+                                yesTitle='Delete'
+                                noTitle='Cancel'
+                                onYes={() => deleteContact(selectedContact?._id, setReRender, setDeleteContactDialog)}
+                                onNo={() => setDeleteContactDialog(false)}
+                            />
+                        </div>
                         : null
                     }
                     <div className='flex justify-between items-center'>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { addCardApi, findAccountsById, findTotalBalance, verifyCardNumber } from '../../apis/apis'
+import { addCardApi, deleteAccountt, findAccountsById, findTotalBalance, verifyCardNumber } from '../../apis/apis'
 import { RxCross1 } from 'react-icons/rx'
 import CustomCard from '../../custom/CustomCard'
 import CustomInput from '../../custom/CustomInput'
@@ -11,6 +11,8 @@ import { CiSquareRemove } from 'react-icons/ci'
 import CustomLoader from '../../custom/CustomLoader'
 import { formattedNumber } from '../../utils/formatCardNumber'
 import classNames from 'classnames'
+import { MdDelete } from 'react-icons/md'
+import CustomDialog from '../../custom/CustomDialog'
 
 function Accounts() {
 
@@ -22,6 +24,8 @@ function Accounts() {
         accountType: '',
     });
     const [openAddCard, setOpenAddCard] = useState(false)
+    const [deleteAccountDialog, setDeleteAccountDialog] = useState(false)
+    const [selectedAccount, setSelectedAccount] = useState(null);
     const [isCardValidated, setIsCardValidated] = useState(false)
     const [reRender, setReRender] = useState(new Date().getTime())
     const [totalBalance, setTotalBalance] = useState(null)
@@ -95,6 +99,20 @@ function Accounts() {
                 />
                 : <div className='w-full h-full py-4 px-8 text-gray-100 flex flex-col gap-8 relative'>
                     {openAddCard ? addCardDialog : null}
+                    {deleteAccountDialog
+                        ? <div className='h-full w-full bg-[#000b] absolute top-0 left-0 right-0 bottom-0 rounded-md z-30'>
+                            <CustomDialog
+                                setDialog={setDeleteAccountDialog}
+                                title='Delete Account'
+                                message={`Are you sure want to delete ${formattedNumber(selectedAccount?.accountNumber)} as your account?`}
+                                yesTitle='Delete'
+                                noTitle='Cancel'
+                                onYes={() => deleteAccountt(selectedAccount?._id, setReRender, setDeleteAccountDialog)}
+                                onNo={() => setDeleteAccountDialog(false)}
+                            />
+                        </div>
+                        : null
+                    }
                     <div className='flex items-center justify-between'>
                         <div className='text-2xl leading-none text-gray-700'>Your Accounts & Cards</div>
                         <div className='flex items-center gap-4'>
@@ -113,10 +131,17 @@ function Accounts() {
                         {accounts?.length > 0
                             ? accounts?.map((acc, index) => (
                                 <CustomCard
-                                    className='h-fit w-[31%] p-4 rounded-md bg-gray-100 flex flex-col gap-2 cursor-pointer'
+                                    className='h-fit w-[31%] p-4 rounded-md bg-gray-100 flex flex-col gap-2 cursor-pointer relative'
                                     key={index}
                                 >
-                                    <div className='text-lg leading-none font-medium text-gray-700 tracking-wide mb-2 flex justify-between items-center'>
+                                    <MdDelete
+                                        className='text-red-500 absolute text-lg leading-none top-3 right-3'
+                                        onClick={() => {
+                                            setDeleteAccountDialog(true)
+                                            setSelectedAccount(acc)
+                                        }}
+                                    />
+                                    <div className='text-lg leading-none font-medium text-gray-700 tracking-wide mb-2 flex justify-start gap-x-6 items-center'>
                                         {acc.accountType}
                                         <p className='m-0'>${acc.balance}</p>
                                     </div>
