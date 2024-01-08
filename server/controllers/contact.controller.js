@@ -99,6 +99,22 @@ router.get('/contact-email/:email', async (req, res) => {
     }
 });
 
+router.delete('/delete-contact/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const deletedContact = await Contact.findByIdAndDelete(id);
+
+        if (!deletedContact) {
+            return res.status(403).json({ message: "Contact not found!" })
+        }
+
+        res.status(200).json({ message: "Contact deleted!" })
+    } catch (error) {
+        res.status(500).json({ message: 'Contact deletion failed!' });
+    }
+})
+
 router.get('/dashboard/:id', async (req, res) => {
 
     const id = req.params.id;
