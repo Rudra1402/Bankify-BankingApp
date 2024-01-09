@@ -61,4 +61,8 @@ app.use('/api', requestRoutes)
 app.use('/api', transactionRoutes)
 app.use('/api', notificationRoutes)
 
+app.get('*', (_, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+});
+
 app.listen(PORT, console.log('Server running on PORT: ' + PORT))
