@@ -111,7 +111,7 @@ router.post('/register', async (req, res) => {
         await user.save();
 
         res.status(201).json({ message: 'User registered successfully. Please verify your email!' });
-        sendVerificationEmail(user, `https://bankify-app.netlify.app/verify/${verificationToken}`)
+        sendVerificationEmail(user, `https://bankify-live.netlify.app/verify/${verificationToken}`)
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'An error occurred during registration' });
@@ -220,7 +220,7 @@ router.put('/update/user', async (req, res) => {
                 verificationToken: verificationToken,
                 isVerified: false
             }
-            sendVerificationEmail(updateObject, `https://bankify-app.netlify.app/verify/${verificationToken}`);
+            sendVerificationEmail(updateObject, `https://bankify-live.netlify.app/verify/${verificationToken}`);
         }
 
         await User.findByIdAndUpdate(
@@ -302,7 +302,7 @@ router.get('/forgot-password', async (req, res) => {
         user.passResetToken = passResetToken;
         await user.save();
 
-        sendPasswordResetEmail(user, `https://bankify-app.netlify.app/reset-password/${passResetToken}`);
+        sendPasswordResetEmail(user, `https://bankify-live.netlify.app/reset-password/${passResetToken}`);
 
         res.json({ message: 'Password reset link sent successfully.' });
     } catch (error) {
