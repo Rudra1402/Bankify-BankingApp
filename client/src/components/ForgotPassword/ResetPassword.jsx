@@ -6,6 +6,7 @@ import CustomInput from '../../custom/CustomInput';
 import CustomButton from '../../custom/CustomButton';
 import { verifyPassResetToken } from '../../apis/apis';
 import { MdKeyboardBackspace } from 'react-icons/md';
+import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 function ResetPassword() {
     const navigate = useNavigate();
@@ -15,6 +16,9 @@ function ResetPassword() {
     const [loading, setLoading] = useState(true);
     const [isPassReset, setIsPassReset] = useState(false);
     const [token, setToken] = useState(null);
+
+    const [viewPass, setViewPass] = useState(false);
+    const [viewConfirmPass, setViewConfirmPass] = useState(false);
 
     useEffect(() => {
         setLoading(true)
@@ -50,30 +54,62 @@ function ResetPassword() {
                     width={"100%"}
                 />
                 : <div className='flex flex-col gap-3'>
-                    <CustomInput
-                        name={"password"}
-                        required={true}
-                        type='password'
-                        label='Password'
-                        labelClass='!text-gray-300'
-                        size='large'
-                        placeholder="Password..."
-                        extraClass='!border-gray-300'
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                    <CustomInput
-                        name={"password"}
-                        required={true}
-                        type='password'
-                        label='Password'
-                        labelClass='!text-gray-300'
-                        size='large'
-                        placeholder="Password..."
-                        extraClass='!border-gray-300'
-                        value={confirmPassword}
-                        onChange={e => setConfirmPassword(e.target.value)}
-                    />
+                    <div className='relative'>
+                        <CustomInput
+                            name={"password"}
+                            required={true}
+                            type={viewPass ? 'text' : 'password'}
+                            label='Password'
+                            labelClass='!text-gray-300'
+                            size='large'
+                            placeholder="Password..."
+                            extraClass='!border-gray-300'
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                        {viewPass == false
+                            ? <IoMdEye
+                                className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                                onClick={() => setViewPass(true)}
+                            />
+                            : null
+                        }
+                        {viewPass == true
+                            ? <IoMdEyeOff
+                                className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                                onClick={() => setViewPass(false)}
+                            />
+                            : null
+                        }
+                    </div>
+                    <div className='relative'>
+                        <CustomInput
+                            name={"password"}
+                            required={true}
+                            type='password'
+                            label='Password'
+                            labelClass='!text-gray-300'
+                            size='large'
+                            placeholder="Password..."
+                            extraClass='!border-gray-300'
+                            value={confirmPassword}
+                            onChange={e => setConfirmPassword(e.target.value)}
+                        />
+                        {viewConfirmPass == false
+                            ? <IoMdEye
+                                className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                                onClick={() => setViewConfirmPass(true)}
+                            />
+                            : null
+                        }
+                        {viewConfirmPass == true
+                            ? <IoMdEyeOff
+                                className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                                onClick={() => setViewConfirmPass(false)}
+                            />
+                            : null
+                        }
+                    </div>
                     <CustomButton
                         text='Reset password'
                         size='small'
