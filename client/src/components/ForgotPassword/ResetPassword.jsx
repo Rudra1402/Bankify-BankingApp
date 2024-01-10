@@ -69,14 +69,14 @@ function ResetPassword() {
                         />
                         {viewPass == false
                             ? <IoMdEye
-                                className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                                className='absolute top-10 right-3 cursor-pointer text-xl leading-none text-gray-600'
                                 onClick={() => setViewPass(true)}
                             />
                             : null
                         }
                         {viewPass == true
                             ? <IoMdEyeOff
-                                className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                                className='absolute top-10 right-3 cursor-pointer text-xl leading-none text-gray-600'
                                 onClick={() => setViewPass(false)}
                             />
                             : null
@@ -97,14 +97,14 @@ function ResetPassword() {
                         />
                         {viewConfirmPass == false
                             ? <IoMdEye
-                                className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                                className='absolute top-10 right-3 cursor-pointer text-xl leading-none text-gray-600'
                                 onClick={() => setViewConfirmPass(true)}
                             />
                             : null
                         }
                         {viewConfirmPass == true
                             ? <IoMdEyeOff
-                                className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                                className='absolute top-10 right-3 cursor-pointer text-xl leading-none text-gray-600'
                                 onClick={() => setViewConfirmPass(false)}
                             />
                             : null
