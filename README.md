@@ -13,6 +13,7 @@
 **New Features yet to be added:**
 1. Request money (✔)
 2. Notifications (adding a contact, transaction, and request) (✔)
+3. Admin Panel
 
 **Things to correct/improve:**
 1. Transactions with 0 amount cannot be processed (Toast notification). (✔)
@@ -20,7 +21,7 @@
 3. Forgot password. (✔)
 4. Unverified users cannot be added as contacts. (✔)
 5. Handling pending state of requests, initiating and declining requests. (✔) (Looking for any bugs or logical errors)
-6. Email verification is only working in localhost and not working in the production environment.
+6. Email verification is only working in localhost and not working in the production environment. (✔)
 
 Sample User Credentials:  
 email: jonsnow@yopmail.com  
