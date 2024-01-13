@@ -9,26 +9,38 @@ import CustomDialog from '../../custom/CustomDialog'
 import CustomInput from '../../custom/CustomInput'
 import CustomLoader from '../../custom/CustomLoader'
 import DashboardLayout from '../../Layouts/DashboardLayout'
+import { FaCopy } from "react-icons/fa";
+import Toast from '../../custom/CustomToast'
 
 function Contacts() {
 
     const { user } = useContext(AppContext);
 
-    const [openAddContact, setOpenAddContact] = useState(false)
+    const [openAddContact, setOpenAddContact] = useState(false);
     const [deleteContactDialog, setDeleteContactDialog] = useState(false);
     const [selectedContact, setSelectedContact] = useState(null);
     const [contactInfo, setContactInfo] = useState({
         name: '',
         email: '',
-    })
-    const [reRender, setReRender] = useState(new Date().getTime())
-    const [contacts, setContacts] = useState(null)
+    });
+    const [reRender, setReRender] = useState(new Date().getTime());
+    const [contacts, setContacts] = useState(null);
+    const [hoveredIndex, setHoveredIndex] = useState(null);
 
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
 
     const handleAccountChange = (e) => {
         const { name, value } = e.target;
         setContactInfo({ ...contactInfo, [name]: value });
+    };
+
+    const handleCopyClick = async (text) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            Toast.success('Copied!', 750);
+        } catch (err) {
+            Toast.error('Unable to copy text!', 750);
+        }
     };
 
     const addContactDialog = (
@@ -117,14 +129,31 @@ function Contacts() {
                                 <CustomCard
                                     key={index}
                                     className='py-3 px-6 rounded bg-gray-100 text-gray-700 cursor-pointer w-[calc(33%-10px)] relative'
+                                    onMouseEnter={() => setHoveredIndex(index)}
+                                    onMouseLeave={() => setHoveredIndex(null)}
                                 >
-                                    <MdDelete
-                                        className='text-red-500 absolute text-lg leading-none top-3 right-3'
-                                        onClick={() => {
-                                            setDeleteContactDialog(true)
-                                            setSelectedContact(contact)
-                                        }}
-                                    />
+                                    {hoveredIndex == index
+                                        ? <div
+                                            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full bg-[#000c] rounded flex items-center justify-center gap-x-2'
+                                        >
+                                            <FaCopy
+                                                title='Email'
+                                                className='text-blue-300 text-xl leading-none shadow-md'
+                                                onClick={() => {
+                                                    handleCopyClick(contact?.email)
+                                                }}
+                                            />
+                                            <MdDelete
+                                                title='Delete'
+                                                className='text-red-400 text-2xl leading-none shadow-md'
+                                                onClick={() => {
+                                                    setDeleteContactDialog(true)
+                                                    setSelectedContact(contact)
+                                                }}
+                                            />
+                                        </div>
+                                        : null
+                                    }
                                     <div className='text-xl'>{contact?.name}</div>
                                     <div className='text-sm'>{contact?.email}</div>
                                 </CustomCard>
