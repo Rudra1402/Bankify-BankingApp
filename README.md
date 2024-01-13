@@ -13,6 +13,7 @@
 **New Features yet to be added:**
 1. Request money (✔)
 2. Notifications (adding a contact, transaction, and request) (✔)
+3. Admin Panel
 
 **Things to correct/improve:**
 1. Transactions with 0 amount cannot be processed (Toast notification). (✔)
