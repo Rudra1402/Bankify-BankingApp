@@ -13,6 +13,8 @@ import { formattedNumber } from '../../utils/formatCardNumber'
 import classNames from 'classnames'
 import { MdDelete } from 'react-icons/md'
 import CustomDialog from '../../custom/CustomDialog'
+import { FaCopy } from 'react-icons/fa'
+import Toast from '../../custom/CustomToast'
 
 function Accounts() {
 
@@ -29,12 +31,22 @@ function Accounts() {
     const [isCardValidated, setIsCardValidated] = useState(false)
     const [reRender, setReRender] = useState(new Date().getTime())
     const [totalBalance, setTotalBalance] = useState(null)
+    const [hoveredIndex, setHoveredIndex] = useState(null);
 
     const [loading, setLoading] = useState(true)
 
     const handleAccountChange = (e) => {
         const { name, value } = e.target;
         setAccountInfo({ ...accountInfo, [name]: value });
+    };
+
+    const handleCopyClick = async (text) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            Toast.success('Copied!', 750);
+        } catch (err) {
+            Toast.error('Unable to copy text!', 750);
+        }
     };
 
     const addCardDialog = (
@@ -133,15 +145,32 @@ function Accounts() {
                                 <CustomCard
                                     className='h-fit w-[31%] p-4 rounded-md bg-gray-100 flex flex-col gap-2 cursor-pointer relative'
                                     key={index}
+                                    onMouseEnter={() => setHoveredIndex(index)}
+                                    onMouseLeave={() => setHoveredIndex(null)}
                                 >
-                                    <MdDelete
-                                        className='text-red-500 absolute text-lg leading-none top-3 right-3'
-                                        onClick={() => {
-                                            setDeleteAccountDialog(true)
-                                            setSelectedAccount(acc)
-                                        }}
-                                    />
-                                    <div className='text-lg leading-none font-medium text-gray-700 tracking-wide mb-2 flex justify-start gap-x-6 items-center'>
+                                    {hoveredIndex == index
+                                        ? <div
+                                            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full bg-[#000c] rounded flex items-center justify-center gap-x-2'
+                                        >
+                                            <FaCopy
+                                                title='Account Number'
+                                                className='text-blue-300 text-xl leading-none shadow-md'
+                                                onClick={() => {
+                                                    handleCopyClick(acc?.accountNumber)
+                                                }}
+                                            />
+                                            <MdDelete
+                                                title='Delete'
+                                                className='text-red-300 text-2xl leading-none shadow-md'
+                                                onClick={() => {
+                                                    setDeleteAccountDialog(true)
+                                                    setSelectedAccount(acc)
+                                                }}
+                                            />
+                                        </div>
+                                        : null
+                                    }
+                                    <div className='text-lg leading-none font-medium text-gray-700 tracking-wide mb-2 flex justify-between gap-x-6 items-center'>
                                         {acc.accountType}
                                         <p className='m-0'>${acc.balance}</p>
                                     </div>
