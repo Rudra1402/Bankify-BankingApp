@@ -384,3 +384,13 @@ export const deleteAccountt = async (accountId, setReRender, setDeleteAccountDia
             Toast.error(err?.response?.data?.message);
         })
 }
+
+export const getAdminUsers = async (isadmin, setUsers, setLoading) => {
+    await api.get('/admin-users', { headers: { isadmin: isadmin } })
+        .then(response => {
+            setUsers(response.data?.users)
+            setLoading(false)
+        }).catch(err => {
+            Toast.error(err?.response?.data?.message);
+        })
+}

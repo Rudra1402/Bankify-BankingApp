@@ -62,6 +62,15 @@ function Navbar({ user, setUser }) {
     );
     return (
         <div className='bg-gray-100 flex items-center justify-end gap-x-6 h-16 w-full py-2 px-8 border-b border-b-gray-200'>
+            {user?.isAdmin
+                ? <Link
+                    to={'/dashboard-admin'}
+                    className='p-2 rounded bg-blue-300 textbase leading-none'
+                >
+                    Admin
+                </Link>
+                : null
+            }
             <div className='relative'>
                 {viewNotifs ? viewNotifications : null}
                 <IoIosNotifications

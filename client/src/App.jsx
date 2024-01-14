@@ -8,16 +8,17 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Homepage from './components/Homepage/Homepage'
 import Dashboard from './components/Dashboard/Dashboard'
+import AdminDashboard from './components/Dashboard/AdminDashboard'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
 import Verify from './components/Register/Verify'
-import DashboardLayout from './Layouts/DashboardLayout'
 import Profile from './components/Profile/Profile';
 import Accounts from './components/Accounts/Accounts';
 import Transfers from './components/Transfers/Transfers';
 import Contacts from './components/Contacts/Contacts';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ForgotPassword/ResetPassword';
+import UsersList from './components/Admin/UsersList';
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
           <Route path="/dashboard/accounts" element={<Accounts />} />
           <Route path="/dashboard/transfers" element={<Transfers />} />
           <Route path="/dashboard/contacts" element={<Contacts />} />
+          <Route path="/dashboard-admin" element={<AdminDashboard />} />
+          <Route path="/dashboard-admin/users" element={<UsersList />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/verify/:token" element={<Verify />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />

@@ -26,6 +26,7 @@ const PORT = process.env.PORT || 8000
 const url = process.env.ATLAS_URI
 
 const userRoutes = require('./controllers/user.controller')
+const adminRoutes = require('./controllers/admin.controller')
 const accountRoutes = require('./controllers/account.controller')
 const contactRoutes = require('./controllers/contact.controller')
 const requestRoutes = require('./controllers/request.controller')
@@ -55,6 +56,7 @@ app.get('/', (_, res) => {
 })
 
 app.use('/api', userRoutes)
+app.use('/api', adminRoutes)
 app.use('/api', accountRoutes)
 app.use('/api', contactRoutes)
 app.use('/api', requestRoutes)
