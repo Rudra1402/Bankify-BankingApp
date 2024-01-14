@@ -6,7 +6,7 @@ function AdminNavbar({ user, setUser }) {
         <div className='bg-gray-100 flex items-center justify-end gap-x-6 h-16 w-full py-2 px-8 border-b border-b-gray-200'>
             <Link
                 to={'/dashboard'}
-                className='rounded bg-blue-300 text-base leading-none p-2'
+                className='rounded bg-blue-500 text-white text-sm leading-none p-2'
             >
                 Go back
             </Link>

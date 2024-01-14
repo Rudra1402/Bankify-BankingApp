@@ -49,25 +49,25 @@ function Dashboard() {
                     }
                     {/* <div className='flex flex-wrap gap-6 lg:gap-x-8'> */}
                     <CustomCard
-                        className='bg-gray-100 !shadow !shadow-slate-100 rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer hover:scale-105 transition-all'
+                        className='bg-gray-100 !shadow-md rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer hover:scale-105 transition-all'
                     >
                         <div className='text-lg leading-none'>Total Accounts</div>
                         <div className='flex-1 text-4xl leading-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>{data?.totalAccounts}</div>
                     </CustomCard>
                     <CustomCard
-                        className='bg-gray-100 !shadow !shadow-slate-100 rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer hover:scale-105 transition-all'
+                        className='bg-gray-100 !shadow-md rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer hover:scale-105 transition-all'
                     >
                         <div className='text-lg leading-none'>Total Transfers</div>
                         <div className='flex-1 text-4xl leading-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>{data?.totalTransfers}</div>
                     </CustomCard>
                     <CustomCard
-                        className='bg-gray-100 !shadow !shadow-slate-100 rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer hover:scale-105 transition-all'
+                        className='bg-gray-100 !shadow-md rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer hover:scale-105 transition-all'
                     >
                         <div className='text-lg leading-none'>Total Sent</div>
                         <div className='flex-1 text-4xl leading-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>${data?.sentAmount}</div>
                     </CustomCard>
                     <CustomCard
-                        className='bg-gray-100 !shadow !shadow-slate-100 rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer hover:scale-105 transition-all'
+                        className='bg-gray-100 !shadow-md rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer hover:scale-105 transition-all'
                     >
                         <div className='text-lg leading-none'>Total Received</div>
                         <div className='flex-1 text-4xl leading-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>${data?.receivedAmount}</div>
@@ -75,7 +75,7 @@ function Dashboard() {
                     {/* </div> */}
                     {/* <div className='flex flex-wrap gap-6 lg:gap-x-8 pb-8'> */}
                     <CustomCard
-                        className='bg-gray-100 !shadow !shadow-slate-100 w-[48%] md:w-[31%] lg:w-[22.5%] h-40 p-4 rounded-md flex flex-col gap-3 hover:scale-105 transition-all'
+                        className='bg-gray-100 !shadow-md w-[48%] md:w-[31%] lg:w-[22.5%] h-40 p-4 rounded-md flex flex-col gap-3 hover:scale-105 transition-all'
                     >
                         <div className='text-lg leading-none'>Your contacts ({data?.contacts?.length})</div>
                         <div className='flex gap-2 items-center relative h-12 overflow-auto'>
@@ -86,7 +86,7 @@ function Dashboard() {
                                         <div
                                             key={index}
                                             className={classNames(
-                                                'bg-green-400 h-12 w-12 rounded-full flex items-center justify-center border-2 border-green-600 absolute top-0'
+                                                'bg-blue-300 h-12 w-12 rounded-full flex items-center justify-center shadow-md border border-blue-400 absolute top-0'
                                             )}
                                             style={{ left: leftValue }}
                                         >
@@ -106,20 +106,20 @@ function Dashboard() {
                     </CustomCard>
                     <Link
                         to={'/dashboard/accounts'}
-                        className='bg-gray-100 !shadow !shadow-slate-100 rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all'
+                        className='bg-gray-100 !shadow-md rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all'
                     >
                         <MdAccountBalance className='text-3xl leading-none' />
                         <div className='text-xl leading-none text-center'>Check Balance</div>
                     </Link>
                     <Link
                         to={'/dashboard/transfers'}
-                        className='bg-gray-100 !shadow !shadow-slate-100 rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all'
+                        className='bg-gray-100 !shadow-md rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all'
                     >
                         <AiOutlineHistory className='text-3xl leading-none' />
                         <div className='text-xl leading-none text-center'>View Recent History</div>
                     </Link>
                     <CustomCard
-                        className='bg-gray-100 !shadow !shadow-slate-100 rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all'
+                        className='bg-gray-100 !shadow-md rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all'
                         onClick={() => setIsPrintStatementOpen(true)}
                     >
                         <BiReceipt className='text-3xl leading-none' />

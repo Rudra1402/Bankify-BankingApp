@@ -22,7 +22,7 @@ function AdminSidebar({ setUser, openSidebar }) {
                     </Link>
                 }
                 {openSidebar
-                    ? <div className='flex flex-col gap-y-4 py-10 px-4'>
+                    ? <div className='flex flex-col gap-y-4 py-8 px-4'>
                         <Link
                             to={'/dashboard-admin/users'}
                             className={classNames(

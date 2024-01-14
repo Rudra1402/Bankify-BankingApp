@@ -48,7 +48,7 @@ function UsersList() {
                     width={"100%"}
                 />
                 : <CustomCard
-                    className='w-full h-full py-4 px-6 text-gray-700 flex flex-col gap-y-4 relative'
+                    className='w-full h-full py-4 px-6 text-gray-700 flex flex-col gap-y-2 relative'
                 >
                     <div className='flex items-center w-full min-h-[60px] rounded overflow-hidden'>
                         <div

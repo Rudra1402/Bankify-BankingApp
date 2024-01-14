@@ -29,35 +29,36 @@ function Navbar({ user, setUser }) {
     const viewNotifications = (
         <div
             ref={viewNotificationsRef}
-            className='absolute top-8 right-0 bg-gray-200 text-gray-700 rounded-md p-2 w-96 min-h-fit h-[400px] overflow-y-auto flex flex-col gap-y-2 z-40 shadow-md border border-gray-300'
+            className='absolute top-8 right-0 bg-gray-200 text-gray-700 rounded-md w-96 h-fit max-h-[400px] overflow-y-auto flex flex-col gap-y-1 z-40 shadow-md border border-gray-400'
         >
-            <div className='text-lg leading-none px-2 py-3 text-gray-800 bg-white rounded'>
+            <div className='text-lg leading-none px-2 py-3 text-gray-100 bg-green-500 rounded shadow-md'>
                 Notifications ({notifications?.length})
             </div>
-            {notifications?.length > 0
-                ? notifications?.map((notif, index) => {
-                    let notifMessage;
-                    if (notif?.notificationType == 1)
-                        notifMessage = " added you as a contact!";
-                    if (notif?.notificationType == 2)
-                        notifMessage = " transferred you money!";
-                    if (notif?.notificationType == 3)
-                        notifMessage = " requested you for money!";
-                    return (
-                        <div
-                            className='w-full h-16 flex items-center justify-between rounded gap-2 bg-gray-50 px-2 py-1 cursor-pointer'
-                            key={index}
-                        >
-                            <div>{notif?.from?.firstName || notif?.from?.lastName ? (notif?.from?.firstName + " " + notif?.from?.lastName) : (notif?.from?.username)}{notifMessage}</div>
-                            <div className='text-sm leading-none whitespace-nowrap'>
-                                {formatTimeSince(notif?.date)}
+            <div className='px-2 pt-2 pb-3 flex flex-col gap-y-2'>
+                {notifications?.length > 0
+                    ? notifications?.map((notif, index) => {
+                        let notifMessage;
+                        if (notif?.notificationType == 1)
+                            notifMessage = " added you as a contact!";
+                        if (notif?.notificationType == 2)
+                            notifMessage = " transferred you money!";
+                        if (notif?.notificationType == 3)
+                            notifMessage = " requested you for money!";
+                        return (
+                            <div
+                                className='w-full h-16 flex items-center justify-between rounded gap-2 bg-gray-50 px-2 py-1 cursor-pointer shadow-md'
+                                key={index}
+                            >
+                                <div>{notif?.from?.firstName || notif?.from?.lastName ? (notif?.from?.firstName + " " + notif?.from?.lastName) : (notif?.from?.username)}{notifMessage}</div>
+                                <div className='text-sm leading-none whitespace-nowrap'>
+                                    {formatTimeSince(notif?.date)}
+                                </div>
                             </div>
-                        </div>
-                    )
-                })
-                : <div className='text-center'>No notifications</div>
-            }
-
+                        )
+                    })
+                    : <div className='text-center'>No notifications</div>
+                }
+            </div>
         </div>
     );
     return (
@@ -65,7 +66,7 @@ function Navbar({ user, setUser }) {
             {user?.isAdmin
                 ? <Link
                     to={'/dashboard-admin'}
-                    className='p-2 rounded bg-blue-300 textbase leading-none'
+                    className='p-2 rounded bg-blue-500 text-white text-sm leading-none'
                 >
                     Admin
                 </Link>
