@@ -48,45 +48,47 @@ function UsersList() {
                     width={"100%"}
                 />
                 : <CustomCard
-                    className='w-full h-full py-4 px-6 text-gray-700 flex flex-col gap-y-2 relative'
+                    className='w-full h-full py-4 px-6 text-gray-700 flex flex-col gap-y-2 relative  overflow-y-auto'
                 >
-                    <div className='flex items-center w-full min-h-[60px] rounded overflow-hidden'>
+                    <div className='flex items-center w-full min-h-[60px] rounded overflow-x-auto'>
                         <div
-                            className='w-[30%] h-full flex items-center gap-x-2.5 justify-start p-3 bg-blue-200'
+                            className='w-[28%] h-full flex items-center gap-x-2.5 justify-start p-3 bg-blue-200'
                         >
                             Full Name
                             <div className='flex flex-col gap-0 items-center'>
-                                <FaCaretUp size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm' />
-                                <FaCaretDown size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm' />
+                                <FaCaretUp size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm cursor-pointer' />
+                                <FaCaretDown size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm cursor-pointer' />
                             </div>
                         </div>
                         <div
-                            className='w-[30%] h-full flex items-center gap-x-2.5 justify-start p-3 bg-blue-200'
+                            className='w-[22%] h-full flex items-center gap-x-2.5 justify-start p-3 bg-blue-200'
                         >
                             Username
                             <div className='flex flex-col gap-0 items-center'>
-                                <FaCaretUp size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm' />
-                                <FaCaretDown size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm' />
+                                <FaCaretUp size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm cursor-pointer' />
+                                <FaCaretDown size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm cursor-pointer' />
                             </div>
                         </div>
                         <div
-                            className='w-[30%] h-full flex items-center gap-x-2.5 justify-start p-3 bg-blue-200'
+                            className='w-[34%] h-full flex items-center gap-x-2.5 justify-start p-3 bg-blue-200'
                         >
                             Email
                             <div className='flex flex-col gap-0 items-center'>
-                                <FaCaretUp size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm' />
-                                <FaCaretDown size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm' />
+                                <FaCaretUp size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm cursor-pointer' />
+                                <FaCaretDown size={12} className='text-xs leading-none hover:bg-gray-400 rounded-sm cursor-pointer' />
                             </div>
                         </div>
-                        <div className='w-[10%] h-full flex items-center justify-start p-3 bg-blue-200'></div>
+                        <div className='w-[16%] h-full flex items-center justify-start p-3 bg-blue-200'>
+                            Verified
+                        </div>
                     </div>
-                    <div className='flex flex-col gap-y-2 w-full h-full overflow-y-auto'>
+                    <div className='flex flex-col gap-y-2 w-full h-full'>
                         {users?.map((user, index) => (
                             <div
                                 className='flex items-center w-full min-h-[50px] rounded overflow-hidden'
                                 key={index}
                             >
-                                <div className='w-[30%] h-full flex items-center justify-start p-3 bg-gray-200'>
+                                <div className='w-[28%] whitespace-nowrap h-full flex items-center justify-start p-3 bg-gray-200 overflow-hidden text-ellipsis'>
                                     {
                                         user?.firstName ? `${user?.firstName} ` : ''
                                     }
@@ -95,13 +97,14 @@ function UsersList() {
                                     }
                                     {!user?.firstName && !user?.lastName ? 'Not Updated' : ''}
                                 </div>
-                                <div className='w-[30%] h-full flex items-center justify-start p-3 bg-gray-200'>
+                                <div className='w-[22%] h-full flex items-center justify-start p-3 bg-gray-200 overflow-hidden text-ellipsis'>
                                     {user?.username}
                                 </div>
-                                <div className='w-[30%] h-full flex items-center justify-start p-3 bg-gray-200'>
+                                <div className='w-[34%] h-full flex items-center justify-start p-3 bg-gray-200 overflow-hidden text-ellipsis'>
                                     {user?.email}
                                 </div>
-                                <div className='w-[10%] h-full p-3 flex items-center justify-end bg-gray-200'>
+                                <div className='w-[16%] h-full p-3 flex items-center justify-start bg-gray-200 overflow-hidden text-ellipsis'>
+                                    {`${user?.isVerified}`}
                                 </div>
                             </div>
                         ))}
