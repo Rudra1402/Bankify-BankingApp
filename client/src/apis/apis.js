@@ -385,10 +385,29 @@ export const deleteAccountt = async (accountId, setReRender, setDeleteAccountDia
         })
 }
 
+export const generatePDF = async () => {
+    try {
+        const response = await api.get('/generate-pdf', {
+            responseType: 'blob',
+        });
+
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'statement.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        Toast.error('Error generating PDF!');
+    }
+};
+
 export const getAdminDashboardData = async (isadmin, setAdminDashData, setLoading) => {
     await api.get('/admin-dashboard', { headers: { isadmin: isadmin } })
         .then(response => {
-            setAdminDashData(response.data?.totalAmount)
+            setAdminDashData(response.data?.stats)
             setLoading(false)
         }).catch(err => {
             Toast.error(err?.response?.data?.message);

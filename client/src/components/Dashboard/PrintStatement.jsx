@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import { historyByUserId } from '../../apis/apis';
+import { generatePDF, historyByUserId } from '../../apis/apis';
 import AppContext from '../../context/AppContext';
 import CustomCard from '../../custom/CustomCard'
 import CustomLoader from '../../custom/CustomLoader';
@@ -11,36 +11,11 @@ import jsPDF from 'jspdf';
 
 function PrintStatement({ setIsPrintStatementOpen }) {
 
-
     const { user } = useContext(AppContext);
     const scrollableRef = useRef(null);
 
     const [transactions, setTransactions] = useState(null);
     const [loading, setLoading] = useState(true);
-
-    const handleConvertToPDF = () => {
-        html2canvas(scrollableRef.current).then((canvas) => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF();
-            const imgWidth = 210;
-            const pageHeight = 295;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            let heightLeft = imgHeight;
-            let position = 0;
-
-            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-
-            while (heightLeft >= 0) {
-                position = heightLeft - imgHeight;
-                pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-            }
-
-            pdf.save('scrollable-content.pdf');
-        });
-    };
 
     useEffect(() => {
         if (user)
@@ -72,6 +47,7 @@ function PrintStatement({ setIsPrintStatementOpen }) {
                         <div
                             ref={scrollableRef}
                             className='h-full w-full flex flex-col gap-3 overflow-auto pt-2 pb-4 px-3 border-b border-b-gray-400'
+                            id='statement_container'
                         >
                             <div className='text-xl leading-none pb-2 underline underline-offset-4'>Bankify Statement</div>
                             {transactions?.map((t, index) => {
@@ -137,7 +113,7 @@ function PrintStatement({ setIsPrintStatementOpen }) {
                                 text='Download PDF'
                                 size='small'
                                 className='!text-sm !bg-blue-600'
-                                onClick={handleConvertToPDF}
+                                onClick={generatePDF}
                             />
                         </div>
                     </div>

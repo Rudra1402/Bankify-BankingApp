@@ -15,7 +15,8 @@ router.get('/admin-dashboard', async (req, res) => {
             {
                 $group: {
                     _id: null,
-                    totalAmount: { $sum: "$amount" }
+                    totalAmount: { $sum: "$amount" },
+                    totalTransactions: { $sum: 1 }
                 }
             }
         ])
@@ -25,12 +26,16 @@ router.get('/admin-dashboard', async (req, res) => {
         const totalUsers = (await User.find({})).length;
 
         const totalTransactionAmount = transactions[0].totalAmount;
+        const totalTranactions = transactions[0].totalTransactions
 
         res.status(200).json({
-            totalAmount: totalTransactionAmount,
-            totalAccounts: totalAccs,
-            totalUsers: totalUsers,
-            message: 'Total Transaction Amount!'
+            stats: {
+                totalAmount: totalTransactionAmount,
+                totalTransactions: totalTranactions,
+                totalAccounts: totalAccs,
+                totalUsers: totalUsers
+            },
+            message: 'Admin Dashboard Data!'
         });
     } catch (error) {
         return res.status(500).json({ message: 'Internal server error!' })

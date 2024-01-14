@@ -5,6 +5,8 @@ const Account = require('../models/account.model');
 const Notification = require('../models/notifications.model');
 const User = require('../models/user.model');
 
+const puppeteer = require('puppeteer');
+
 router.post('/transfer', async (req, res) => {
     try {
         const { fromAccount, toAccount, amount } = req.body;
@@ -104,5 +106,23 @@ router.get('/transaction/:userid', async (req, res) => {
         res.status(500).json({ message: 'An error occurred while fetching transaction history' });
     }
 });
+
+router.get('/generate-pdf', async (req, res) => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    await page.setViewport({ width: 1200, height: 800 });
+    await page.goto('http://localhost:5173/dashboard');
+
+    const dialogId = "statement_container";
+    // await page.waitForSelector(`#${dialogId}`);
+
+    const pdfPath = 'D:/statement.pdf';
+
+    await page.pdf({ path: pdfPath, format: 'A4', clip: { selector: `#${dialogId}` } });
+    await browser.close();
+
+    return res.sendFile(pdfPath);
+})
 
 module.exports = router;

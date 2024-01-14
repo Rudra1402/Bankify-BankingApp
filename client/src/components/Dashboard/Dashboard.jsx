@@ -7,7 +7,7 @@ import { MdAccountBalance } from 'react-icons/md'
 import CustomCard from '../../custom/CustomCard'
 import classNames from 'classnames';
 import AppContext from '../../context/AppContext'
-import { dashboardData, historyByUserId } from '../../apis/apis'
+import { dashboardData } from '../../apis/apis'
 import CustomLoader from '../../custom/CustomLoader'
 import { Link } from 'react-router-dom'
 import PrintStatement from './PrintStatement'
@@ -17,7 +17,6 @@ function Dashboard() {
     const { user } = useContext(AppContext);
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [first, setfirst] = useState(null)
 
     const [isPrintStatementOpen, setIsPrintStatementOpen] = useState(false);
 
@@ -26,7 +25,6 @@ function Dashboard() {
         document.title = "Bankify | Dashboard"
         if (user) {
             dashboardData(user?.id, setData, setLoading)
-            historyByUserId(user?.id, setfirst, setLoading)
         }
     }, [user])
 
