@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { getAdminUsers } from '../../apis/apis';
 import AppContext from '../../context/AppContext';
 import CustomCard from '../../custom/CustomCard'
+import CustomInput from '../../custom/CustomInput';
 import CustomLoader from '../../custom/CustomLoader';
 import AdminDashboardLayout from '../../Layouts/AdminDashboardLayout';
+import { FaFileCsv } from "react-icons/fa6";
 
 function UsersList() {
 
@@ -50,6 +52,22 @@ function UsersList() {
                 : <CustomCard
                     className='w-full h-full py-4 px-6 text-gray-700 flex flex-col gap-y-2 relative  overflow-y-auto'
                 >
+                    <div className='flex items-center justify-between mb-2'>
+                        <CustomInput
+                            id="users"
+                            size='none'
+                            className="!w-80"
+                            containerClass="!gap-0"
+                            placeholder="username..."
+                        />
+                        <div className='p-2 cursor-pointer hover:bg-gray-200 rounded'>
+                            <FaFileCsv
+                                title='Download CSV'
+                                className='text-xl leading-none'
+                                onClick={() => { }}
+                            />
+                        </div>
+                    </div>
                     <div className='flex items-center w-full min-h-[60px] rounded overflow-x-auto'>
                         <div
                             className='w-[28%] h-full flex items-center gap-x-2.5 justify-start p-3 bg-blue-200'

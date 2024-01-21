@@ -34,7 +34,7 @@ function AdminDashboard() {
                     <CustomCard
                         className='bg-gray-100 !shadow-md rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer hover:scale-105 transition-all'
                     >
-                        <div className='text-lg leading-none'>Total Accounts</div>
+                        <div className='text-lg leading-none'>Total Users</div>
                         <div className='flex-1 text-4xl leading-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
                             {adminDashData?.totalUsers}
                         </div>
@@ -50,7 +50,7 @@ function AdminDashboard() {
                     <CustomCard
                         className='bg-gray-100 !shadow-md rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer hover:scale-105 transition-all'
                     >
-                        <div className='text-lg leading-none'>Total Accounts</div>
+                        <div className='text-lg leading-none'>Total Transactions</div>
                         <div className='flex-1 text-4xl leading-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
                             {adminDashData?.totalTransactions}
                         </div>
@@ -58,7 +58,7 @@ function AdminDashboard() {
                     <CustomCard
                         className='bg-gray-100 !shadow-md rounded-md h-40 w-[48%] md:w-[31%] lg:w-[22.5%] relative p-2 cursor-pointer hover:scale-105 transition-all'
                     >
-                        <div className='text-lg leading-none'>Total Accounts</div>
+                        <div className='text-lg leading-none'>Total Amount</div>
                         <div className='flex-1 text-4xl leading-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
                             ${adminDashData?.totalAmount}
                         </div>
