@@ -29,7 +29,7 @@ function Navbar({ user, setUser }) {
     const viewNotifications = (
         <div
             ref={viewNotificationsRef}
-            className='absolute top-8 right-0 bg-gray-200 text-gray-700 rounded-md w-96 h-fit max-h-[400px] overflow-y-auto flex flex-col gap-y-1 z-40 shadow-md border border-gray-400'
+            className='absolute top-8 -right-16 sm2:right-0 bg-gray-200 text-gray-700 rounded-md w-80 sm2:w-96 h-fit max-h-[400px] overflow-y-auto flex flex-col gap-y-1 z-40 shadow-md border border-gray-400'
         >
             <div className='text-lg leading-none px-2 py-3 text-gray-100 bg-green-500 rounded shadow-md'>
                 Notifications ({notifications?.length})
