@@ -132,7 +132,7 @@ function Transfers() {
                 />
                 : <div className='h-full w-full p-4 flex flex-col items-center lg:flex-row overflow-y-auto lg:overflow-hidden gap-6'>
                     {createPayment
-                        ? <div className='rounded-md w-4/5 lg:w-1/2 h-full bg-white p-5 flex flex-col gap-4 lg:overflow-y-auto'>
+                        ? <div className='rounded-md w-[95%] lg:w-1/2 h-full bg-white p-5 flex flex-col gap-4 lg:overflow-y-auto'>
                             <div className='flex flex-col gap-1'>
                                 <label htmlFor="fromAccount" className='text-gray-400'>From Account</label>
                                 <select
@@ -227,7 +227,7 @@ function Transfers() {
                         : null
                     }
                     {requestMoney
-                        ? <div className='rounded-md w-4/5 lg:w-1/2 h-full bg-white p-5 flex flex-col gap-4 overflow-y-auto'>
+                        ? <div className='rounded-md w-[95%] lg:w-1/2 h-full bg-white p-5 flex flex-col gap-4 overflow-y-auto'>
                             <div className='flex flex-col gap-1'>
                                 <label htmlFor="fromAccount" className='text-gray-400'>From Account</label>
                                 <select
@@ -299,7 +299,7 @@ function Transfers() {
                     }
                     {requestMoney || createPayment
                         ? null
-                        : <div className='rounded-md w-4/5 lg:w-1/2 h-full bg-white p-2 lg:p-5 flex flex-col lg:justify-center items-center gap-4 lg:overflow-y-auto'>
+                        : <div className='rounded-md w-[95%] lg:w-1/2 h-full bg-white p-2 lg:p-5 flex flex-col lg:justify-center items-center gap-4 lg:overflow-y-auto'>
                             <div className='text-center underline underline-offset-4 text-2xl leading-none mb-4'>Transactions</div>
                             <div className='w-full text-lg leading-6 bg-slate-100 p-2 rounded'>&#8226; Send money to your friends, family or business related purposes.</div>
                             <div className='w-full text-lg leading-6 bg-slate-100 p-2 rounded'>&#8226; You can also monitor your transaction history.</div>
@@ -326,7 +326,7 @@ function Transfers() {
                         </div>
                     }
                     <hr className='w-2/3 border-t border-t-gray-400 lg:hidden' />
-                    <div className='w-4/5 lg:w-1/2 h-full bg-white p-2 lg:p-5 flex flex-col gap-3 lg:overflow-y-auto lg:border-l lg:border-l-gray-200'>
+                    <div className='w-[95%] lg:w-1/2 h-full bg-white p-2 lg:p-5 flex flex-col gap-3 lg:overflow-y-auto lg:border-l lg:border-l-gray-200'>
                         <div className='flex items-center w-full'>
                             <div
                                 className={classNames(

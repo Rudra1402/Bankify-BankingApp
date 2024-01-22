@@ -125,25 +125,25 @@ function Accounts() {
                         </div>
                         : null
                     }
-                    <div className='flex items-center justify-between'>
-                        <div className='text-2xl leading-none text-gray-700'>Your Accounts & Cards</div>
-                        <div className='flex items-center gap-4'>
-                            <div className='bg-gray-100 py-1.5 px-3 rounded text-gray-800 h-9'>
+                    <div className='flex flex-col lg:flex-row items-center justify-between gap-4'>
+                        <div className='text-xl lg:text-2xl leading-none text-gray-700'>Your Accounts & Cards</div>
+                        <div className='flex flex-col w-[95%] sm:w-[75%] md:w-fit md:flex-row md:items-center gap-2 md:gap-4'>
+                            <div className='bg-gray-100 py-1.5 px-3 rounded text-gray-800 h-9 text-center'>
                                 Total Balance: ${totalBalance}
                             </div>
                             <div
-                                className='flex items-center gap-2 cursor-pointer py-1.5 px-3 rounded bg-gray-100 text-gray-800'
+                                className='flex items-center gap-2 cursor-pointer py-1.5 px-3 rounded bg-gray-100 text-gray-800 justify-center'
                                 onClick={() => setOpenAddCard(true)}
                             >
                                 <AiOutlinePlusCircle className='text-xl leading-none' />Add Card
                             </div>
                         </div>
                     </div>
-                    <div className='flex gap-8 flex-wrap pb-6'>
+                    <div className='flex gap-6 justify-center md:justify-start flex-wrap pb-6'>
                         {accounts?.length > 0
                             ? accounts?.map((acc, index) => (
                                 <CustomCard
-                                    className='h-fit w-[31%] p-4 rounded-md bg-gray-100 flex flex-col gap-2 cursor-pointer relative'
+                                    className='h-fit w-[95%] sm:w-[75%] md:w-[45%] lg2:w-[31%] p-4 rounded-md bg-gray-100 flex flex-col gap-2 cursor-pointer relative'
                                     key={index}
                                     onMouseEnter={() => setHoveredIndex(index)}
                                     onMouseLeave={() => setHoveredIndex(null)}
@@ -170,14 +170,14 @@ function Accounts() {
                                         </div>
                                         : null
                                     }
-                                    <div className='text-lg leading-none font-medium text-gray-700 tracking-wide mb-2 flex justify-between gap-x-6 items-center'>
+                                    <div className='text-base lg:text-lg leading-none font-medium text-gray-700 tracking-wide mb-2 flex justify-between gap-x-6 items-center'>
                                         {acc.accountType}
                                         <p className='m-0'>${acc.balance}</p>
                                     </div>
                                     <CustomInput
                                         labelClass='!text-sm !text-gray-400'
                                         label='Card Number'
-                                        extraClass='text-lg leading-none font-medium !border-gray-300'
+                                        extraClass='text-base lg:text-lg leading-none font-medium !border-gray-300 !max-w-full'
                                         type='text'
                                         disabled={true}
                                         value={formattedNumber(acc.accountNumber)}

@@ -112,23 +112,23 @@ function Contacts() {
                         </div>
                         : null
                     }
-                    <div className='flex justify-between items-center'>
+                    <div className='flex flex-col md:flex-row justify-between items-center gap-4'>
                         <div className='flex items-center gap-6'>
-                            <div className='text-2xl leading-none'>Your Contacts</div>
+                            <div className='text-xl md:text-2xl leading-none'>Your Contacts</div>
                         </div>
                         <div
-                            className='flex items-center gap-2 cursor-pointer py-1.5 px-3 rounded bg-gray-100 text-gray-800'
+                            className='flex items-center gap-2 cursor-pointer py-1.5 px-3 rounded bg-gray-100 text-gray-800 w-[95%] sm2:w-[85%] md:w-fit justify-center'
                             onClick={() => setOpenAddContact(true)}
                         >
                             <AiOutlinePlusCircle className='text-xl leading-none' />Add Contact
                         </div>
                     </div>
-                    <div className='flex gap-4 flex-wrap'>
+                    <div className='flex gap-4 flex-wrap justify-center md:justify-start'>
                         {contacts?.length > 0
                             ? contacts?.map((contact, index) => (
                                 <CustomCard
                                     key={index}
-                                    className='py-3 px-6 rounded bg-gray-100 text-gray-700 cursor-pointer w-[calc(33%-10px)] relative'
+                                    className='py-3 px-6 rounded bg-gray-100 text-gray-700 cursor-pointer w-[95%] sm2:w-[85%] md:w-[47.5%] lg:w-[calc(33%-10px)] relative'
                                     onMouseEnter={() => setHoveredIndex(index)}
                                     onMouseLeave={() => setHoveredIndex(null)}
                                 >
@@ -154,7 +154,7 @@ function Contacts() {
                                         </div>
                                         : null
                                     }
-                                    <div className='text-xl'>{contact?.name}</div>
+                                    <div className='text-lg lg2:text-xl'>{contact?.name}</div>
                                     <div className='text-sm'>{contact?.email}</div>
                                 </CustomCard>
                             ))
