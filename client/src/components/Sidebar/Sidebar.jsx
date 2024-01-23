@@ -75,10 +75,13 @@ function Sidebar({ setUser, openSidebar }) {
                             />Profile
                         </Link>
                     </div>
-                    : <div className='flex flex-col gap-y-8 py-10 px-1'>
+                    : <div className='flex flex-col gap-y-4 py-8 px-1'>
                         <Link
                             to={'/dashboard/accounts'}
-                            className='flex items-center justify-center gap-3 text-xl leading-none px-3'
+                            className={classNames(
+                                'flex items-center justify-center gap-3 text-xl leading-none py-2 px-3 rounded',
+                                activePath == '/dashboard/accounts' ? 'bg-green-300' : ''
+                            )}
                         >
                             <MdOutlineManageAccounts
                                 className='text-2xl leading-none'
@@ -87,7 +90,10 @@ function Sidebar({ setUser, openSidebar }) {
                         </Link>
                         <Link
                             to={'/dashboard/transfers'}
-                            className='flex items-center justify-center gap-3 text-xl leading-none px-3'
+                            className={classNames(
+                                'flex items-center justify-center gap-3 text-xl leading-none py-2 px-3 rounded',
+                                activePath == '/dashboard/transfers' ? 'bg-green-300' : ''
+                            )}
                         >
                             <BiTransfer
                                 className='text-2xl leading-none'
@@ -96,7 +102,10 @@ function Sidebar({ setUser, openSidebar }) {
                         </Link>
                         <Link
                             to={'/dashboard/contacts'}
-                            className='flex items-center justify-center gap-3 text-xl leading-none px-3'
+                            className={classNames(
+                                'flex items-center justify-center gap-3 text-xl leading-none py-2 px-3 rounded',
+                                activePath == '/dashboard/contacts' ? 'bg-green-300' : ''
+                            )}
                         >
                             <IoIosContacts
                                 className='text-2xl leading-none'
@@ -105,7 +114,10 @@ function Sidebar({ setUser, openSidebar }) {
                         </Link>
                         <Link
                             to={'/dashboard/profile'}
-                            className='flex items-center justify-center gap-3 text-xl leading-none px-3'
+                            className={classNames(
+                                'flex items-center justify-center gap-3 text-xl leading-none py-2 px-3 rounded',
+                                activePath == '/dashboard/profile' ? 'bg-green-300' : ''
+                            )}
                         >
                             <CgProfile
                                 className='text-2xl leading-none'
