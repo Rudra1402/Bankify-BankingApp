@@ -31,12 +31,12 @@ function DashboardLayout({ children }) {
 
     return (
         <div className='flex items-start w-full h-full bg-gray-100 text-gray-800 relative'>
-            <div className={classNames('h-full p-2 relative', openSidebar ? 'min-w-[240px]' : 'min-w-[72px]')}>
+            <div className={classNames('h-full p-2 relative hidden sm2:block', openSidebar ? 'min-w-[240px]' : 'min-w-[72px]')}>
                 <Sidebar setUser={setUser} openSidebar={openSidebar} />
             </div>
             <div
                 className={classNames(
-                    'absolute z-40 cursor-pointer top-16 bg-blue-500 text-white border border-white rounded-full p-1',
+                    'hidden sm2:block absolute z-40 cursor-pointer top-16 bg-blue-500 text-white border border-white rounded-full p-1',
                     openSidebar ? 'left-[232px]' : 'left-[64px]'
                 )}
                 onClick={() => {
