@@ -109,7 +109,7 @@ function Accounts() {
                     height={"100%"}
                     width={"100%"}
                 />
-                : <div className='w-full h-full py-4 px-8 text-gray-100 flex flex-col gap-8 relative'>
+                : <div className='w-full h-full px-2 sm2:px-4 py-4 text-gray-100 flex flex-col gap-8 relative'>
                     {openAddCard ? addCardDialog : null}
                     {deleteAccountDialog
                         ? <div className='h-full w-full bg-[#000b] absolute top-0 left-0 right-0 bottom-0 rounded-md z-30'>

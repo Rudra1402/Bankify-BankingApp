@@ -130,7 +130,7 @@ function Transfers() {
                     height={"100%"}
                     width={"100%"}
                 />
-                : <div className='h-full w-full p-4 flex flex-col items-center lg:flex-row overflow-y-auto lg:overflow-hidden gap-6'>
+                : <div className='h-full w-full py-3 px-2 flex flex-col items-center lg:flex-row overflow-y-auto lg:overflow-hidden gap-6'>
                     {createPayment
                         ? <div className='rounded-md w-[95%] lg:w-1/2 h-full bg-white p-5 flex flex-col gap-4 lg:overflow-y-auto'>
                             <div className='flex flex-col gap-1'>

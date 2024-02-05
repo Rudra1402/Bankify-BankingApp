@@ -96,7 +96,7 @@ function Contacts() {
                     height={"100%"}
                     width={"100%"}
                 />
-                : <div className='w-full h-full p-4 flex flex-col gap-6 relative'>
+                : <div className='w-full h-full py-4 px-2 sm2:px-4 flex flex-col gap-6 relative'>
                     {openAddContact ? addContactDialog : null}
                     {deleteContactDialog
                         ? <div className='h-full w-full bg-[#000b] absolute top-0 left-0 right-0 bottom-0 rounded-md z-30'>
@@ -123,7 +123,7 @@ function Contacts() {
                             <AiOutlinePlusCircle className='text-xl leading-none' />Add Contact
                         </div>
                     </div>
-                    <div className='flex gap-4 flex-wrap justify-center md:justify-start'>
+                    <div className='flex gap-4 flex-wrap justify-center md:justify-start pb-4'>
                         {contacts?.length > 0
                             ? contacts?.map((contact, index) => (
                                 <CustomCard
