@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import { generatePDF, historyByUserId } from '../../apis/apis';
+import { historyByUserId } from '../../apis/apis';
 import AppContext from '../../context/AppContext';
 import CustomCard from '../../custom/CustomCard'
 import CustomLoader from '../../custom/CustomLoader';
 import CustomButton from '../../custom/CustomButton';
 import { RxCross2 } from 'react-icons/rx'
 import { formattedNumber } from '../../utils/formatCardNumber';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { CSVLink } from 'react-csv'
 
 function PrintStatement({ setIsPrintStatementOpen }) {
 
@@ -16,6 +15,7 @@ function PrintStatement({ setIsPrintStatementOpen }) {
 
     const [transactions, setTransactions] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [csvData, setCsvData] = useState(null);
 
     useEffect(() => {
         if (user)
@@ -23,6 +23,37 @@ function PrintStatement({ setIsPrintStatementOpen }) {
     }, [user])
 
     let mainTotalSent = 0, mainTotalReceived = 0;
+
+    useEffect(() => {
+        if (loading || !transactions)
+            return;
+        let csvArr = []
+        let tempMainSent = 0, tempMainReceived = 0;
+        transactions?.map(t => {
+            let totalSentAcc = 0, totalReceivedAcc = 0;
+            let tempObj = { 'Account_Number': formattedNumber(t[0]) };
+            t[1]?.map(row => {
+                row?.fromAccount?.user?._id == user?.id
+                    ? totalSentAcc += row?.amount
+                    : totalReceivedAcc += row?.amount
+
+                row?.fromAccount?.user?._id == user?.id
+                    ? tempMainSent += row?.amount
+                    : tempMainReceived += row?.amount
+            })
+            tempObj = {
+                ...tempObj,
+                'Money_Sent': totalSentAcc,
+                'Money_Received': totalReceivedAcc
+            }
+            csvArr.push(tempObj);
+        })
+        csvArr.push({
+            'User_Total_Sent': tempMainSent,
+            'User_Total_Received': tempMainReceived
+        })
+        setCsvData(csvArr);
+    }, [loading, transactions])
 
     return (
         <CustomCard
@@ -109,12 +140,16 @@ function PrintStatement({ setIsPrintStatementOpen }) {
                                 className='!text-sm !w-24'
                                 onClick={() => setIsPrintStatementOpen(false)}
                             />
-                            <CustomButton
-                                text='Download PDF'
-                                size='small'
-                                className='!text-sm !bg-blue-600'
-                                onClick={generatePDF}
-                            />
+                            <CSVLink
+                                data={csvData !== null ? csvData : []}
+                                filename='Transactions'
+                            >
+                                <CustomButton
+                                    text='Download CSV'
+                                    size='small'
+                                    className='!text-sm !bg-blue-600'
+                                />
+                            </CSVLink>
                         </div>
                     </div>
                 }

@@ -8,6 +8,7 @@ import CustomInput from '../../custom/CustomInput';
 import CustomLoader from '../../custom/CustomLoader';
 import AdminDashboardLayout from '../../Layouts/AdminDashboardLayout';
 import { FaFileCsv } from "react-icons/fa6";
+import { CSVLink, CSVDownload } from 'react-csv'
 
 function UsersList() {
 
@@ -61,11 +62,15 @@ function UsersList() {
                             placeholder="username..."
                         />
                         <div className='p-2 cursor-pointer hover:bg-gray-200 rounded'>
-                            <FaFileCsv
-                                title='Download CSV'
-                                className='text-xl leading-none'
-                                onClick={() => { }}
-                            />
+                            <CSVLink
+                                data={users}
+                                filename='Users'
+                            >
+                                <FaFileCsv
+                                    title='Download CSV'
+                                    className='text-xl leading-none'
+                                />
+                            </CSVLink>
                         </div>
                     </div>
                     <div className='flex items-center w-full min-h-[60px] rounded overflow-x-auto'>
