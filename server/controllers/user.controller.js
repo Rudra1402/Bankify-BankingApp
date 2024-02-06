@@ -182,18 +182,16 @@ router.post('/login', async (req, res) => {
 
         const deviceData = req.headers['user-agent'];
 
-        console.log(deviceData);
-
         const ip = requestIp.getClientIp(req);
-        console.log(ip);
         const geo = geoip.lookup(ip);
-        const locationData = {
-            country: geo.country,
-            city: geo.city,
-            timezone: geo.timezone
-        };
-
-        console.log(locationData);
+        let locationData = {};
+        if (geo && geo.country) {
+            locationData = {
+                country: geo.country,
+                city: geo.city,
+                timezone: geo.timezone
+            }
+        }
 
         loginEmail(user, deviceData, locationData);
 
@@ -206,7 +204,8 @@ router.post('/login', async (req, res) => {
             email: user.email,
             isAdmin: user.isAdmin,
             isVerified: user.isVerified,
-            profileImageUrl: user.profileImageUrl
+            profileImageUrl: user.profileImageUrl,
+            isSuspended: user.isSuspended
         }
 
         res.status(200).json({ message: 'Login successful', user: loggedInUser });
