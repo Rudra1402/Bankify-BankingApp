@@ -45,7 +45,9 @@ export const userLogin = async (payload, setUser) => {
     await api.post('/login', payload)
         .then(response => {
             if (response.data?.user?.token) {
-                if (!response.data?.user?.isVerified) {
+                if (response.data?.user?.isSuspended) {
+                    Toast.error('User suspended!')
+                } else if (!response.data?.user?.isVerified) {
                     Toast.warn('Please verify your email!');
                 } else {
                     localStorage.setItem("user", JSON.stringify(
