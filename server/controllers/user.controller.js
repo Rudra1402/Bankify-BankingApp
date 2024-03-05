@@ -8,6 +8,8 @@ const nodeMailer = require('nodemailer');
 const { v4: uuidv4 } = require('uuid');
 const admin = require('firebase-admin');
 const multer = require('multer');
+const requestIp = require('request-ip');
+const geoip = require('geoip-lite');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -133,6 +135,36 @@ router.get('/verify/:token', async (req, res) => {
     res.status(200).json({ message: 'Email verified successfully.' });
 });
 
+const loginEmail = (user, deviceInfo, locationInfo) => {
+    const mailOptions = {
+        from: 'bankingapp.ba5@gmail.com',
+        to: user?.email,
+        subject: 'Login Detected',
+        html: `
+            <div style="font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;">
+                <div style="max-width: 600px; margin: 20px auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h1 style="color: #333;">Hello, ${user?.username}!</h1>
+                </div>
+                <h1>Login Information</h1>
+                <p>Email: ${user.email}</p>
+                <p>Device Information: ${deviceInfo}</p>
+                <p>Location: ${locationInfo?.city + ", " + locationInfo?.country}</p>
+                <p>Timezone: ${locationInfo?.timezone}</p>
+            </div>
+        </div>
+        `
+    }
+    transporter
+        .sendMail(mailOptions)
+        .then((info) => {
+            console.log('Email sent:', info.response);
+        })
+        .catch((error) => {
+            console.error('Error sending email:', error);
+        });
+}
+
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -148,6 +180,21 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'Incorrect password!' });
         }
 
+        const deviceData = req.headers['user-agent'];
+
+        const ip = requestIp.getClientIp(req);
+        const geo = geoip.lookup(ip);
+        let locationData = {};
+        if (geo && geo.country) {
+            locationData = {
+                country: geo.country,
+                city: geo.city,
+                timezone: geo.timezone
+            }
+        }
+
+        loginEmail(user, deviceData, locationData);
+
         const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
 
         let loggedInUser = {
@@ -157,7 +204,8 @@ router.post('/login', async (req, res) => {
             email: user.email,
             isAdmin: user.isAdmin,
             isVerified: user.isVerified,
-            profileImageUrl: user.profileImageUrl
+            profileImageUrl: user.profileImageUrl,
+            isSuspended: user.isSuspended
         }
 
         res.status(200).json({ message: 'Login successful', user: loggedInUser });

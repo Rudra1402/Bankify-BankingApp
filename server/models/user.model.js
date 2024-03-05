@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
     isVerified: { type: Boolean, default: false },
     verificationToken: { type: String },
     isAdmin: { type: Boolean, default: false },
-    passResetToken: { type: String }
+    passResetToken: { type: String },
+    isSuspended: { type: Boolean, default: false }
 });
 
 const User = mongoose.model('User', userSchema);
