@@ -28,6 +28,6 @@ Sample User Credentials:
 email: jonsnow@yopmail.com  
 password: js123
 
-Currently, facing some issues with MongoDB Network Access.
+Currently, facing some issues with MongoDB Network Access. (RESOLVED ✔)
 
 ### Live [Link](https://bankify-live.netlify.app/)
