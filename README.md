@@ -14,6 +14,7 @@
 1. Request money (✔)
 2. Notifications (adding a contact, transaction, and request) (✔)
 3. Admin Panel
+4. Integrate Stripe
 
 **Things to correct/improve:**
 1. Transactions with 0 amount cannot be processed (Toast notification). (✔)
@@ -28,6 +29,6 @@ Sample User Credentials:
 email: jonsnow@yopmail.com  
 password: js123
 
-Currently, facing some issues with MongoDB Network Access.
+Currently, facing some issues with MongoDB Network Access. (RESOLVED ✔)
 
 ### Live [Link](https://bankify-live.netlify.app/)
