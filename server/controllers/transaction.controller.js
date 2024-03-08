@@ -100,7 +100,7 @@ router.get('/history/:accountId', async (req, res) => {
                 model: 'User',
                 select: 'username email firstName profileImageUrl'
             },
-        });
+        }).sort({ date: -1 });
 
         res.status(200).json({ transactionHistory });
     } catch (error) {
