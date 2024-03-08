@@ -239,6 +239,22 @@ export const findContactsByEmail = (email, setContacts) => {
         })
 }
 
+const stripeCheckoutHandler = async (amount) => {
+    const stripe = await stripePromise;
+    api.post('/stripe-checkout-session', { amount })
+        .then(async (response) => {
+            const result = await stripe.redirectToCheckout({
+                sessionId: response.data?.id
+            });
+            if (result.error) {
+                console.error(result.error.message);
+                Toast.error(result.error.message);
+            }
+        }).catch(err => {
+            Toast.error(err?.response?.data?.message);
+        })
+}
+
 export const paymentTransfer = async (fromAccId, toAccId, amount, setCreatePayment, setReRender) => {
     if (amount <= 0) {
         Toast.error('Amount cannot be 0 or less!')
@@ -248,7 +264,6 @@ export const paymentTransfer = async (fromAccId, toAccId, amount, setCreatePayme
         Toast.error('Enter a valid amount!');
         return;
     }
-    const stripe = await stripePromise;
     api.post('/transfer', {
         fromAccount: fromAccId,
         toAccount: toAccId,
@@ -257,13 +272,7 @@ export const paymentTransfer = async (fromAccId, toAccId, amount, setCreatePayme
         setReRender(new Date().getTime())
         setCreatePayment(false)
         Toast.success(response.data?.message)
-        const result = await stripe.redirectToCheckout({
-            sessionId: response.data?.id
-        });
-        if (result.error) {
-            console.error(result.error.message);
-            Toast.error(result.error.message);
-        }
+        stripeCheckoutHandler(parseInt(amount))
     }).catch(err => {
         Toast.error(err?.response?.data?.message)
     })
