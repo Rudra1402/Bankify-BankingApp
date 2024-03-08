@@ -1,5 +1,7 @@
 import api from '../axios/axios'
 import Toast from '../custom/CustomToast'
+import { loadStripe } from '@stripe/stripe-js';
+const stripePromise = loadStripe("pk_test_51NvZlNLfu8NrZKtoHQUQ0dwJaL0QsWNX7Vaucs1AmMbZIzFzfymrZjoQVY4E93qj52hyCjjTpVQCtNdaYWHWFDji00nKIY95zn");
 
 export const userById = async (id, setUser, setLoading) => {
     await api.get(`/user/${id}`)
@@ -237,7 +239,7 @@ export const findContactsByEmail = (email, setContacts) => {
         })
 }
 
-export const paymentTransfer = (fromAccId, toAccId, amount, setCreatePayment, setReRender) => {
+export const paymentTransfer = async (fromAccId, toAccId, amount, setCreatePayment, setReRender) => {
     if (amount <= 0) {
         Toast.error('Amount cannot be 0 or less!')
         return;
@@ -246,14 +248,22 @@ export const paymentTransfer = (fromAccId, toAccId, amount, setCreatePayment, se
         Toast.error('Enter a valid amount!');
         return;
     }
+    const stripe = await stripePromise;
     api.post('/transfer', {
         fromAccount: fromAccId,
         toAccount: toAccId,
         amount: parseInt(amount)
-    }).then(response => {
+    }).then(async (response) => {
         setReRender(new Date().getTime())
         setCreatePayment(false)
         Toast.success(response.data?.message)
+        const result = await stripe.redirectToCheckout({
+            sessionId: response.data?.id
+        });
+        if (result.error) {
+            console.error(result.error.message);
+            Toast.error(result.error.message);
+        }
     }).catch(err => {
         Toast.error(err?.response?.data?.message)
     })

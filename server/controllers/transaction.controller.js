@@ -4,6 +4,7 @@ const Transaction = require('../models/transaction.model');
 const Account = require('../models/account.model');
 const Notification = require('../models/notifications.model');
 const User = require('../models/user.model');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const puppeteer = require('puppeteer');
 
@@ -38,14 +39,58 @@ router.post('/transfer', async (req, res) => {
         });
 
         await notify.save();
-
         await transaction.save();
         await sourceAccount.save();
         await destinationAccount.save();
 
-        res.status(200).json({ success: true, message: 'Funds transferred successfully' });
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+                price_data: {
+                    currency: 'usd',
+                    product_data: {
+                        name: 'Bankify Transfer',
+                    },
+                    unit_amount: amount * 100,
+                },
+                quantity: 1,
+            }],
+            mode: 'payment',
+            success_url: 'http://localhost:5173/dashboard/transfers',
+            cancel_url: 'http://localhost:5173/dashboard/transfers',
+        });
+
+        res.status(200).json({
+            success: true,
+            message: 'Funds transferred successfully',
+            id: session.id
+        });
     } catch (error) {
+        console.log(error)
         res.status(500).json({ success: false, message: 'Transfer failed' });
+    }
+});
+
+router.post('/charge', async (req, res) => {
+    const { amount, token } = req.body;
+
+    try {
+        const charge = await stripe.charges.create({
+            amount,
+            currency: 'usd',
+            source: token.id,
+        });
+
+        res.json({ message: 'Payment successful' });
+    } catch (err) {
+        console.error('Error processing payment:', err);
+        let message = 'An error occurred while processing your payment.';
+
+        if (err.type === 'StripeCardError') {
+            message = err.message;
+        }
+
+        res.status(500).json({ message });
     }
 });
 
