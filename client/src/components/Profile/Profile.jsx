@@ -120,9 +120,9 @@ function Profile() {
                     height={"100%"}
                     width={"100%"}
                 />
-                : <div className='w-full h-full py-2 px-4 text-white flex flex-col-reverse xl:flex-row justify-start items-center gap-6 xl:gap-0 xl:justify-between'>
+                : <div className='w-full h-full py-2 px-4 text-white flex flex-col-reverse xl:flex-row justify-start gap-6 xl:gap-0 xl:justify-between'>
                     <CustomCard className={classNames(
-                        'flex flex-col items-center gap-6 overflow-auto px-4 py-2',
+                        'flex flex-col xl:items-start items-center gap-6 overflow-auto px-4 py-2',
                         openSidebar ? 'w-full xl:w-[70%]' : 'w-full xl:w-[60%]'
                     )}>
                         <div className='text-xl text-gray-700 leading-none mt-2 flex gap-1'>
@@ -233,11 +233,13 @@ function Profile() {
                     </CustomCard>
                     <div
                         className={classNames(
-                            'm-auto flex flex-col justify-start items-center gap-6 overflow-auto',
+                            'flex flex-row xl:flex-col xl:justify-start justify-center xl:items-center items-center gap-6 overflow-auto',
                             openSidebar ? 'w-full xl:w-[30%]' : 'w-full xl:w-[40%]'
                         )}
                     >
-                        <div className='hidden xl:block text-gray-600'>You can upload 1 image per login!</div>
+                        <div className='hidden xl:block text-gray-600'>
+                            You can upload 1 image per login!
+                        </div>
                         <div className='!h-40 !w-40 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden'>
                             <img
                                 src={profile?.profileImageUrl ? profile?.profileImageUrl : dummyuser}
@@ -245,25 +247,29 @@ function Profile() {
                                 className='h-full w-full'
                             />
                         </div>
-                        <CustomInput
-                            name="image"
-                            text='Upload image'
-                            accept="image/*"
-                            type='file'
-                            onChange={e => {
-                                setProfileImg(e.target.files[0])
-                                console.log(e.target.files[0])
-                            }}
-                            extraClass='!h-fit'
-                            disabled={user?.isProfileImageUpdated ? true : false}
-                        />
-                        <CustomButton
-                            type='submit'
-                            text='Upload'
-                            size='small'
-                            className='!text-base !h-8'
-                            onClick={handleImageUpload}
-                        />
+                        <div
+                            className='flex flex-col gap-y-4 items-center'
+                        >
+                            <CustomInput
+                                name="image"
+                                text='Upload image'
+                                accept="image/*"
+                                type='file'
+                                onChange={e => {
+                                    setProfileImg(e.target.files[0])
+                                    console.log(e.target.files[0])
+                                }}
+                                extraClass='!h-fit'
+                                disabled={user?.isProfileImageUpdated ? true : false}
+                            />
+                            <CustomButton
+                                type='submit'
+                                text='Upload'
+                                size='small'
+                                className='!text-base !h-8'
+                                onClick={handleImageUpload}
+                            />
+                        </div>
                     </div>
                 </div>}
         </DashboardLayout>
