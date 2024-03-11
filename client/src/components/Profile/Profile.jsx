@@ -129,7 +129,12 @@ function Profile() {
                             <div className='underline underline-offset-4'>Profile</div>
                             <div className=''>({profileCompletionPct}% completed)</div>
                         </div>
-                        <div className='flex items-center gap-8'>
+                        <div
+                            className={classNames(
+                                'flex items-center gap-8',
+                                openSidebar ? 'flex-col lg:flex-row' : 'flex-col md:flex-row'
+                            )}
+                        >
                             <CustomInput
                                 label={"First Name"}
                                 placeholder="First name"
@@ -147,7 +152,12 @@ function Profile() {
                                 onChange={handleUpdateUser}
                             />
                         </div>
-                        <div className='flex items-center gap-8'>
+                        <div
+                            className={classNames(
+                                'flex items-center gap-8',
+                                openSidebar ? 'flex-col lg:flex-row' : 'flex-col md:flex-row'
+                            )}
+                        >
                             <CustomInput
                                 label={"Email"}
                                 placeholder="Email"
@@ -174,7 +184,12 @@ function Profile() {
                         />
                         <hr className='my-1' />
                         <div className='text-xl leading-none mt-2 text-gray-700 underline underline-offset-4'>Change Password</div>
-                        <div className='flex items-center gap-8'>
+                        <div
+                            className={classNames(
+                                'flex items-center gap-8',
+                                openSidebar ? 'flex-col lg:flex-row' : 'flex-col md:flex-row'
+                            )}
+                        >
                             <div className='relative'>
                                 <CustomInput
                                     label={"Current Password"}
@@ -233,14 +248,16 @@ function Profile() {
                     </CustomCard>
                     <div
                         className={classNames(
-                            'flex flex-row xl:flex-col xl:justify-start justify-center xl:items-center items-center gap-6 overflow-auto',
+                            'flex flex-col md2:flex-row xl:flex-col xl:justify-start justify-center xl:items-center items-center gap-6 overflow-auto min-h-[320px] md2:min-h-[180px] xl:h-full',
                             openSidebar ? 'w-full xl:w-[30%]' : 'w-full xl:w-[40%]'
                         )}
                     >
                         <div className='hidden xl:block text-gray-600'>
                             You can upload 1 image per login!
                         </div>
-                        <div className='!h-40 !w-40 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden'>
+                        <div
+                            className='!h-40 !w-40 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden'
+                        >
                             <img
                                 src={profile?.profileImageUrl ? profile?.profileImageUrl : dummyuser}
                                 alt={profile?.username}
