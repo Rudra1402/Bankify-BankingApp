@@ -32,70 +32,72 @@ function Register({ setPage }) {
     })
 
     return (
-        <div className='h-full w-full flex flex-col justify-center items-center gap-6'>
-            <div className='text-3xl font-semibold mb-2 underline underline-offset-[16px] tracking-wide text-gray-700'>Register</div>
-            <CustomForm
-                className='gap-4 items-center'
-                onSubmit={formik.handleSubmit}
-            >
-                <CustomInput
-                    name={"username"}
-                    required={true}
-                    type='text'
-                    size='large'
-                    placeholder="Username"
-                    extraClass='!border-gray-300'
-                    value={formik.values.username}
-                    onChange={e => formik.setFieldValue("username", e.target.value)}
-                />
-                <CustomInput
-                    name={"email"}
-                    required={true}
-                    type='email'
-                    size='large'
-                    placeholder="Email"
-                    extraClass='!border-gray-300'
-                    value={formik.values.email}
-                    onChange={e => formik.setFieldValue("email", e.target.value)}
-                />
-                <div className='relative'>
+        <div className='h-full w-full flex flex-col justify-center bg-gray-100 items-center gap-6'>
+            <div className="bg-white flex flex-col justify-center items-center gap-6 shadow-lg rounded-lg p-8 w-full max-w-md">
+                <div className='text-3xl font-semibold mb-2 underline underline-offset-[16px] tracking-wide text-gray-700'>Register</div>
+                <CustomForm
+                    className='gap-4 items-center'
+                    onSubmit={formik.handleSubmit}
+                >
                     <CustomInput
-                        name={"password"}
-                        type={viewPass ? 'text' : 'password'}
+                        name={"username"}
                         required={true}
+                        type='text'
                         size='large'
-                        placeholder="Password"
+                        placeholder="Username"
                         extraClass='!border-gray-300'
-                        value={formik.values.password}
-                        onChange={e => formik.setFieldValue("password", e.target.value)}
+                        value={formik.values.username}
+                        onChange={e => formik.setFieldValue("username", e.target.value)}
                     />
-                    {viewPass == false
-                        ? <IoMdEye
-                            className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
-                            onClick={() => setViewPass(true)}
+                    <CustomInput
+                        name={"email"}
+                        required={true}
+                        type='email'
+                        size='large'
+                        placeholder="Email"
+                        extraClass='!border-gray-300'
+                        value={formik.values.email}
+                        onChange={e => formik.setFieldValue("email", e.target.value)}
+                    />
+                    <div className='relative'>
+                        <CustomInput
+                            name={"password"}
+                            type={viewPass ? 'text' : 'password'}
+                            required={true}
+                            size='large'
+                            placeholder="Password"
+                            extraClass='!border-gray-300'
+                            value={formik.values.password}
+                            onChange={e => formik.setFieldValue("password", e.target.value)}
                         />
-                        : null
-                    }
-                    {viewPass == true
-                        ? <IoMdEyeOff
-                            className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
-                            onClick={() => setViewPass(false)}
-                        />
-                        : null
-                    }
+                        {viewPass == false
+                            ? <IoMdEye
+                                className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                                onClick={() => setViewPass(true)}
+                            />
+                            : null
+                        }
+                        {viewPass == true
+                            ? <IoMdEyeOff
+                                className='absolute top-5 right-3 cursor-pointer text-xl leading-none text-gray-600'
+                                onClick={() => setViewPass(false)}
+                            />
+                            : null
+                        }
+                    </div>
+                    <CustomButton
+                        text="Register"
+                        size='small'
+                        type="submit"
+                    />
+                </CustomForm>
+                <div className='flex items-center gap-1 text-lg text-gray-500'>
+                    Already have an account?
+                    <div
+                        onClick={() => setPage("login")}
+                        className='text-green-600 cursor-pointer'
+                    >Login</div>
                 </div>
-                <CustomButton
-                    text="Register"
-                    size='small'
-                    type="submit"
-                />
-            </CustomForm>
-            <div className='flex items-center gap-1 text-lg text-gray-500'>
-                Already have an account?
-                <div
-                    onClick={() => setPage("login")}
-                    className='text-green-600 cursor-pointer'
-                >Login</div>
             </div>
         </div>
     )

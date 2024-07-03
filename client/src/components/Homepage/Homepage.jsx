@@ -22,10 +22,10 @@ function Homepage() {
                 <img
                     src={homepage}
                     alt='Image'
-                    className='rounded-md h-64 w-64 mb-3 shadow-md'
+                    className='rounded-md h-64 w-72 mb-3 shadow-md'
                 />
-                <div className='text-4xl leading-none font-semibold'>Bankify</div>
-                <div className='text-lg leading-none font-medium'>Banking made simple.</div>
+                <div className="text-5xl leading-tight font-bold text-green-400">Bankify</div>
+                <div className="text-xl leading-tight font-medium text-gray-200">Banking made simple.</div>
             </div>
             <div className='flex items-center gap-4 w-full md:w-1/2 h-full bg-white overflow-y-auto relative'>
                 {view

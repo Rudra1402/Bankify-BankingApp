@@ -43,74 +43,76 @@ function Login({ setPage }) {
     }, [user])
 
     return (
-        <div className='h-full w-full flex flex-col justify-center items-center gap-6'>
-            <div
-                className='text-3xl text-gray-700 font-semibold mb-2 underline underline-offset-[16px] tracking-wide'
-            >
-                Login
-            </div>
-            <CustomForm
-                className='gap-4 items-center'
-                onSubmit={formik.handleSubmit}
-            >
-                <CustomInput
-                    name={"email"}
-                    required={true}
-                    type='email'
-                    size='large'
-                    placeholder="Email"
-                    extraClass='!border-gray-300'
-                    value={formik.values.email}
-                    onChange={e => formik.setFieldValue("email", e.target.value)}
-                />
-                <div className='flex flex-col gap-1 relative'>
-                    <CustomInput
-                        name={"password"}
-                        type={viewPass ? 'text' : 'password'}
-                        required={true}
-                        size='large'
-                        placeholder="Password"
-                        extraClass='!border-gray-300'
-                        value={formik.values.password}
-                        onChange={e => formik.setFieldValue("password", e.target.value)}
-                    />
-                    {viewPass == false
-                        ? <IoMdEye
-                            className={classNames(
-                                'text-gray-600 text-xl leading-none cursor-pointer',
-                                'absolute top-5 right-3'
-                            )}
-                            onClick={() => setViewPass(true)}
-                        />
-                        : null
-                    }
-                    {viewPass == true
-                        ? <IoMdEyeOff
-                            className={classNames(
-                                'text-gray-600 text-xl leading-none cursor-pointer',
-                                'absolute top-5 right-3'
-                            )}
-                            onClick={() => setViewPass(false)}
-                        />
-                        : null
-                    }
-                    <Link
-                        className='text-blue-500 w-full flex justify-end text-sm'
-                        to={'/forgot-password'}
-                    >Forgot password?</Link>
-                </div>
-                <CustomButton
-                    text="Login"
-                    size='small'
-                    type="submit"
-                />
-            </CustomForm>
-            <div className='flex items-center gap-1 text-lg text-gray-500'>
-                Create an account?
+        <div className='h-full w-full flex flex-col justify-center items-center bg-gray-100 gap-6'>
+            <div className="bg-white flex flex-col justify-center items-center gap-6 shadow-lg rounded-lg p-8 w-full max-w-md">
                 <div
-                    onClick={() => setPage("register")}
-                    className='cursor-pointer text-green-600'
-                >Register</div>
+                    className='text-3xl text-gray-700 font-semibold mb-2 underline underline-offset-[16px] tracking-wide'
+                >
+                    Login
+                </div>
+                <CustomForm
+                    className='gap-4 items-center'
+                    onSubmit={formik.handleSubmit}
+                >
+                    <CustomInput
+                        name={"email"}
+                        required={true}
+                        type='email'
+                        size='large'
+                        placeholder="Email"
+                        extraClass='!border-gray-300'
+                        value={formik.values.email}
+                        onChange={e => formik.setFieldValue("email", e.target.value)}
+                    />
+                    <div className='flex flex-col gap-1 relative'>
+                        <CustomInput
+                            name={"password"}
+                            type={viewPass ? 'text' : 'password'}
+                            required={true}
+                            size='large'
+                            placeholder="Password"
+                            extraClass='!border-gray-300'
+                            value={formik.values.password}
+                            onChange={e => formik.setFieldValue("password", e.target.value)}
+                        />
+                        {viewPass == false
+                            ? <IoMdEye
+                                className={classNames(
+                                    'text-gray-600 text-xl leading-none cursor-pointer',
+                                    'absolute top-5 right-3'
+                                )}
+                                onClick={() => setViewPass(true)}
+                            />
+                            : null
+                        }
+                        {viewPass == true
+                            ? <IoMdEyeOff
+                                className={classNames(
+                                    'text-gray-600 text-xl leading-none cursor-pointer',
+                                    'absolute top-5 right-3'
+                                )}
+                                onClick={() => setViewPass(false)}
+                            />
+                            : null
+                        }
+                        <Link
+                            className='text-blue-500 w-full flex justify-end text-sm'
+                            to={'/forgot-password'}
+                        >Forgot password?</Link>
+                    </div>
+                    <CustomButton
+                        text="Login"
+                        size='small'
+                        type="submit"
+                    />
+                </CustomForm>
+                <div className='flex items-center gap-1 text-lg text-gray-500'>
+                    Create an account?
+                    <div
+                        onClick={() => setPage("register")}
+                        className='cursor-pointer text-green-600'
+                    >Register</div>
+                </div>
             </div>
         </div>
     )
