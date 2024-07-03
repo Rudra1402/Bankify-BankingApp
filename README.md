@@ -21,9 +21,9 @@
 2. Email update should resend verification email. (✔)
 3. Forgot password. (✔)
 4. Unverified users cannot be added as contacts. (✔)
-5. Handling pending state of requests, initiating and declining requests. (✔) (Looking for any bugs or logical errors)
+5. Handling pending state of requests, initiating and declining requests. (✔)
 6. Email verification is only working in localhost and not working in the production environment. (✔)
-7. Mobile responsiveness
+7. Mobile responsiveness (✔)
 
 Sample User Credentials:  
 email: jonsnow@yopmail.com  
